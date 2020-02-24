@@ -3,6 +3,7 @@
 
 Mangary.db
 wwwroot/UploadedPhotos/*
+wwwroot/lib/*
 
 # User-specific files
 *.suo

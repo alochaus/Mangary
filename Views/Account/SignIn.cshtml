@@ -1,0 +1,82 @@
+@model Mangary.ViewModels.Account.SignInViewModel
+
+@{
+	ViewData["Title"] = "Sign in";
+}
+
+<div class="card mt-5 mx-auto rounded abc">
+	<article class="card-body">
+		<h1 class="card-title text-center mb-4 mt-1">@ViewData["Title"]</h1>
+		<hr />
+		<form method="POST">
+			<div class="text-danger" asp-validation-summary="All"></div>
+
+			<div class="form-group">
+				<label asp-for="Username" class="text-dark font-weight-bold">Username</label>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" style="width:42px;"><i class="fa fa-user mx-auto"></i></span>
+					</div>
+					<input class="form-control" asp-for="Username" />
+					<span class="text-danger" asp-validation-for="Username" ></span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Password" class="text-dark font-weight-bold">Password</label>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><i class="fa fa-key"></i></span>
+					</div>
+					<input class="form-control" asp-for="Password" />
+					<span class="text-danger" asp-validation-for="Password" ></span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="checkbox">
+					<label asp-for="RememberMe">
+						<input asp-for="RememberMe" />
+						@Html.DisplayNameFor(m => m.RememberMe)
+					</label>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<button class="btn btn-success" type="submit">Sign in</button>
+			</div>
+		</form>
+	</article>
+</div>
+
+
+<!--
+<form method="POST">
+	<div class="text-danger" asp-validation-summary="All"></div>
+
+	<div class="form-group">
+		<label asp-for="Username"></label>
+		<input class="form-control" asp-for="Username" />
+		<span class="text-danger" asp-validation-for="Username" ></span>
+	</div>
+
+	<div class="form-group">
+		<label asp-for="Password"></label>
+		<input class="form-control" asp-for="Password" />
+		<span class="text-danger" asp-validation-for="Password" ></span>
+	</div>
+
+	<div class="form-group">
+		<div class="checkbox">
+			<label asp-for="RememberMe">
+				<input asp-for="RememberMe" />
+				@Html.DisplayNameFor(m => m.RememberMe)
+			</label>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<button class="btn btn-success" type="submit">Sign in</button>
+	</div>
+</form>
+-->

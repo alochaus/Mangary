@@ -1,0 +1,30 @@
+@model Mangary.ViewModels.Admin.RoleManagerViewModel;
+
+@{
+	ViewData["Title"] = "Role Manager";
+}
+
+<div class="card mt-5 mx-auto rounded abc">
+	<article class="card-body">
+		<h1 class="card-title text-center mb-4 mt-1">@ViewData["Title"]</h1>
+		<hr />
+		<form method="POST">
+			<div class="text-danger" asp-validation-summary="All"></div>
+
+			<div class="form-group">
+				<label asp-for="Username"></label>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" style="width:42px;"><i class="fa fa-id-card mx-auto"></i></span>
+					</div>
+					<input class="form-control" asp-for="Username" />
+					<span class="text-danger" asp-validation-for="Username"></span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<button class="btn btn-success" type="submit">Get Roles</button>
+			</div>
+		</form>
+	</article>
+</div>

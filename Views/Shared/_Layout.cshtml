@@ -1,0 +1,95 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> signInManager;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - Mangrary</title>
+	<link rel="stylesheet" href="~/lib/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+<!--
+	<button class="btn btn-warning " onclick="$('#jumbotron').toggle();" style="position: absolute; margin-left: 10px; margin-top: 10px; border-radius: 25px;">X</button>
+	<div id="jumbotron" class="jumbotron bg-danger" style="margin-bottom:0px; border-radius:0px">
+		<h1 style="text-align:center; font-size:30pt; color:#eeeeee">50% OFF ON WATAMOTE</h1>
+	</div>
+-->
+
+	<div class="sticky-top">
+		<nav class="navbar navbar-expand-sm navbar-light bg-light">
+			<a class="navbar-brand font-weight-bold" asp-action="Index" asp-controller="Home"><span class="darkred">Mangary</span></a>
+			<button class="navbar-toggler" data-toggle="collapse" data-target="#nav"><span class="navbar-toggler-icon"></span></button>
+			<div class="collapse navbar-collapse text-center" id="nav">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link" asp-action="Index" asp-controller="Home"><span is-active-route asp-controller="Home" asp-action="Index">Home</span></a></li>
+					<li class="nav-item"><a class="nav-link" asp-action="Category" asp-controller="Product"><span is-active-route asp-controller="Product" asp-action="Category">Categories</span></a></li>
+					<li class="nav-item"><a class="nav-link" asp-action="Contact" asp-controller="Home"><span is-active-route asp-controller="Home" asp-action="Contact">Contact</span></a></li>
+					@if(signInManager.IsSignedIn(User))
+					{
+						<li class="nav-item">
+							<form method="post" asp-action="SignOut" asp-controller="Account">
+									<button id="signout" type="submit" class="nav-link btn btn-link">
+										Sign out
+									</button>
+							</form>
+						</li>
+					}
+					else
+					{
+						<li class="nav-item"><a class="nav-link" asp-action="SignIn" asp-controller="Account"><span is-active-route asp-controller="Account" asp-action="SignIn">Sign in</span></a></li>
+						<li class="nav-item"><a class="nav-link" asp-action="SignUp" asp-controller="Account"><span is-active-route asp-controller="Account" asp-action="SignUp">Sign up</span></a></li>
+					}
+				</ul>
+				<div class="ml-auto">
+					<form class="form-inline my-2 my-lg-0" method="GET" asp-controller="Product" asp-action="Search">
+						<div class="search mx-auto">
+							<input type="text" placeholder=" " name="pattern">
+							<div>
+								<svg>
+									<use xlink:href="#path">
+								</svg>
+							</div>
+						</div>
+							
+						<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+							<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 28" id="path">
+								<path d="M32.9418651,-20.6880772 C37.9418651,-20.6880772 40.9418651,-16.6880772 40.9418651,-12.6880772 C40.9418651,-8.68807717 37.9418651,-4.68807717 32.9418651,-4.68807717 C27.9418651,-4.68807717 24.9418651,-8.68807717 24.9418651,-12.6880772 C24.9418651,-16.6880772 27.9418651,-20.6880772 32.9418651,-20.6880772 L32.9418651,-29.870624 C32.9418651,-30.3676803 33.3448089,-30.770624 33.8418651,-30.770624 C34.08056,-30.770624 34.3094785,-30.6758029 34.4782612,-30.5070201 L141.371843,76.386562" transform="translate(83.156854, 22.171573) rotate(-225.000000) translate(-83.156854, -22.171573)"></path>
+							</symbol>
+						</svg>
+<!--
+						<input class="form-control mr-sm-2" name="pattern" type="search" placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-success my-2 my-sm-0 mx-auto" type="submit">Search</button>
+						<br />
+						-->
+					</form>
+				</div>
+			</div>
+		</nav>
+	</div>
+
+			@RenderBody()
+
+<!--
+		<main role="main">
+		</main> 
+-->
+
+	<footer class="border-top footer text-muted bg-light">
+		<div class="container">
+			&copy; 2019 - Mangary - <a asp-action="Privacy" asp-controller="Home">Privacy</a>
+		</div>
+	</footer>
+
+	<script src="~/lib/jquery/dist/jquery.js"></script>
+	<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+
+	@RenderSection("Scripts", required: false)
+</body>
+</html>

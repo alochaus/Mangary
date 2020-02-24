@@ -1,0 +1,37 @@
+@model IEnumerable<Product>
+
+<div class="container rounded bg-light">
+	<table class="table mt-3">
+		<tr>
+			<th>Cover</th>
+			<th>Name</th>
+			<th>Price</th>
+		</tr>
+		@try
+		{
+			@foreach (Product Manga in Model)
+			{
+				<tr>
+					<td>
+						<a asp-action="ProductsPage" asp-controller="Product" asp-route-ProductId="@Manga.ProductId">
+							<img style="width: 100px" class="card-img-top" src="/UploadedPhotos/@Manga.PhotoPath" asp-append-version="true" />
+						</a>
+					</td>
+					<td>
+						<a asp-action="ProductsPage" asp-controller="Product" asp-route-ProductId="@Manga.ProductId">
+						@Manga.Name
+						</a>
+					</td>
+					<td>
+						<a asp-action="ProductsPage" asp-controller="Product" asp-route-ProductId="@Manga.ProductId">
+						$@Manga.Price USD
+						</a>	
+					</td>
+				</tr>
+			}
+		}
+		catch
+		{
+		}
+	</table>
+</div>

@@ -1,0 +1,66 @@
+@model List<Mangary.ViewModels.Products.CategoryViewModel>
+
+@{
+	ViewData["Title"] = "Category Search";
+}
+
+<div class="container rounded bg-light">
+	<div class="text-center pt-3 mt-2">
+		<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#form" aria-expanded="false" aria-controls="form"><i class="fa fa-plus pr-2" aria-hidden="true"></i>Category Search</button>
+	</div>
+	<div class="collapse multi-collapse" id="form">	
+		<br />
+		<form method="POST" asp-controller="Product" asp-action="CategorySearch">
+			<div class="d-flex text-left justify-content-around flex-wrap">
+					<input type="hidden" asp-for="@Model[0].Name" />
+					<input type="hidden" asp-for="@Model[0].IsSelected" class="form-check-input" />
+			@for(int i=1; i<Model.Count(); i++)
+			{
+					<div style="width:170px">
+						<input type="hidden" asp-for="@Model[i].Name" />
+						<input class="text-right" asp-for="@Model[i].IsSelected" class="form-check-input" />
+
+						<label class="form-check-label" asp-for="@Model[i].Name">
+							@Model[i].Name
+						</label>
+					</div>
+			}
+			</div>
+			<br />
+			<div class="text-center"><button class="btn btn-success" type="submit">Submit</button></div>
+		</form>
+	</div>
+	<table class="table mt-3">
+		<tr>
+			<th>Cover</th>
+			<th>Name</th>
+			<th>Price</th>
+		</tr>
+		@try
+		{
+			@foreach (Product Manga in Model[0].MangaList)
+			{
+				<tr>
+					<td>
+						<a asp-action="ProductsPage" asp-controller="Product" asp-route-ProductId="@Manga.ProductId">
+							<img style="width: 100px" class="card-img-top" src="/UploadedPhotos/@Manga.PhotoPath" asp-append-version="true" />
+						</a>
+					</td>
+					<td>
+						<a asp-action="ProductsPage" asp-controller="Product" asp-route-ProductId="@Manga.ProductId">
+						@Manga.Name
+						</a>
+					</td>
+					<td>
+						<a asp-action="ProductsPage" asp-controller="Product" asp-route-ProductId="@Manga.ProductId">
+						$@Manga.Price USD
+						</a>	
+					</td>
+				</tr>
+			}
+		}
+		catch
+		{
+		}
+	</table>
+</div>

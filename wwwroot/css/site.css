@@ -1,0 +1,215 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+/* html, body { background-color: #DDD; } */
+.abc { width: 360px; }
+
+#input-70
+{
+	width: 70%
+}
+
+#signout
+{
+	padding-bottom: 0.0rem;
+	border-bottom-width: 0px;
+	padding-top: 0.5rem;
+	border-top-width: 0px;
+	border-left-width: 0px;
+	padding-left: 0.4rem;
+	padding-right: 0px;
+	border-right-width: 0px;
+}
+
+.footer {
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+.darkred {
+	color: #bd0029;
+
+}
+
+.active {
+	font-weight: bold;
+	color: #c00000;
+}
+
+
+.search {
+	display: table;
+  }
+  .search input {
+	background: none;
+	border: none;
+	outline: none;
+	width: 28px;
+	min-width: 0;
+	padding: 0;
+	z-index: 1;
+	position: relative;
+	line-height: 18px;
+	margin: 5px 0;
+	font-size: 14px;
+	-webkit-appearance: none;
+	font-family: 'Mukta Malar';
+	-webkit-transition: all .6s ease;
+	transition: all .6s ease;
+	cursor: pointer;
+	/* color: #fff; */
+	color: #bd0029;
+  }
+  .search input + div {
+	position: relative;
+	height: 28px;
+	width: 100%;
+	margin: -28px 0 0 0;
+  }
+  .search input + div svg {
+	display: block;
+	position: absolute;
+	height: 28px;
+	width: 160px;
+	right: 0;
+	top: 0;
+	fill: none;
+	stroke: #bd0029;
+	/* stroke: #fff; */
+	stroke-width: 1.5px;
+	stroke-dashoffset: 271.908;
+	stroke-dasharray: 59 212.908;
+	-webkit-transition: all .6s ease;
+	transition: all .6s ease;
+  }
+  .search input:not(:placeholder-shown), .search input:focus {
+	width: 160px;
+	padding: 0 4px;
+	cursor: text;
+  }
+  .search input:not(:placeholder-shown) + div svg, .search input:focus + div svg {
+	stroke-dasharray: 150 212.908;
+	stroke-dashoffset: 300;
+  }
+  
+  ::-moz-selection {
+	background: rgba(255, 255, 255, 0.2);
+  }
+  
+  ::selection {
+	background: rgba(255, 255, 255, 0.2);
+  }
+  
+  ::-moz-selection {
+	background: rgba(255, 255, 255, 0.2);
+  }
+  
+  html {
+	box-sizing: border-box;
+	-webkit-font-smoothing: antialiased;
+  }
+  
+  * {
+	box-sizing: inherit;
+  }
+  *:before, *:after {
+	box-sizing: inherit;
+  }
+
+body {
+  /* Location of the image */
+  background-image: url(/images/background.jpg);
+  
+  /* Image is centered vertically and horizontally at all times */
+  background-position: center center;
+  
+  /* Image doesn't repeat */
+  background-repeat: no-repeat;
+  
+  /* Makes the image fixed in the viewport so that it doesn't move when 
+     the content height is greater than the image height */
+  background-attachment: fixed;
+  
+  /* This is what makes the background image rescale based on its container's size */
+  background-size: cover;
+  
+  /* Pick a solid background color that will be displayed while the background image is loading */
+  background-color:#464646;
+  
+  /* SHORTHAND CSS NOTATION
+   * background: url(background-photo.jpg) center center cover no-repeat fixed;
+   */
+}
+
+@media (max-width: 575.98px) { .abc { width: 90%; } }

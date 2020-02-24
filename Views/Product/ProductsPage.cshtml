@@ -1,0 +1,32 @@
+@model Product
+
+@{
+	ViewData["Title"] = Model.Name;
+}
+
+<div class="container rounded bg-light mt-2 py-3">
+	@if(ViewBag.HasManagerRole)
+	{
+		<a class="btn btn-warning" asp-action="EditProduct" asp-controller="Manager" asp-route-ProductId="@Model.ProductId">
+			<i class="fa fa-edit" aria-hidden="true"></i> Edit
+		</a> 
+	}
+	<div class="my-auto">
+		<div class="row">
+			<div class="col-md text-center">
+					<img class="p-1 mx-md-auto" style="width:300px"src="/UploadedPhotos/@Model.PhotoPath" asp-append-version="true" />
+			</div>
+			<div class="col-md">
+				<h2>@Model.Name</h2>
+				<p class="h6">@Model.Description</p>
+				<br />
+				<div class="text-center">
+					<p class="h5 text-success">$@Model.Price USD</p>
+					<a class="btn btn-primary" href="#">
+						<i class="fa fa-shopping-cart" aria-hidden="true"></i>  Add to cart
+					</a> 
+				</div>
+			</div>		
+		</div>
+	</div>	
+</div>

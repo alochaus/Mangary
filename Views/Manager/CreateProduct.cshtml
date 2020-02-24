@@ -1,0 +1,103 @@
+@model Mangary.ViewModels.Manager.CreateProductViewModel
+
+@{
+	ViewData["Title"] = "Create Product";
+}
+
+<div class="container py-3">
+<div class="card mx-auto rounded abc">
+	<article class="card-body">
+		<h1 class="card-title text-center mb-4 mt-1">@ViewData["Title"]</h1>
+		<form enctype="multipart/form-data" method="POST">
+			<div class="text-danger" asp-validation-summary="All"></div>
+			<hr />
+			<div class="form-group">
+				<label asp-for="Name" class="text-dark font-weight-bold"></label>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" style="width:42px;"><i class="fa fa-book mx-auto"></i></span>
+					</div>
+					<input class="form-control" asp-for="Name" />
+					<span class="text-danger" asp-validation-for="Name" ></span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Description" class="text-dark font-weight-bold"></label>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><i class="fa fa-key"></i></span>
+					</div>
+					<textarea class="form-control" asp-for="Description" rows="5"></textarea>
+					<span class="text-danger" asp-validation-for="Description" ></span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Price" class="text-dark font-weight-bold"></label>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" style="width:42px;"><i class="fa fa-book mx-auto"></i></span>
+					</div>
+					<input class="form-control" asp-for="Price" />
+					<span class="text-danger" asp-validation-for="Price" ></span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Quantity" class="text-dark font-weight-bold"></label>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" style="width:42px;"><i class="fa fa-book mx-auto"></i></span>
+					</div>
+					<input class="form-control" asp-for="Quantity" />
+					<span class="text-danger" asp-validation-for="Quantity" ></span>
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<label asp-for="Category1" class="text-dark font-weight-bold"></label>
+				<div>
+					<select asp-for="Category1" asp-items="Html.GetEnumSelectList<Categories>()">
+						<option value="">Please select</option>
+					</select>
+				</div>
+				<span class="text-danger" asp-validation-for="Category1" ></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Category2" class="text-dark font-weight-bold"></label>
+				<div>
+					<select asp-for="Category2" asp-items="Html.GetEnumSelectList<Categories>()">
+						<option value="">Please select</option>
+					</select>
+				</div>
+				<span class="text-danger" asp-validation-for="Category2" ></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Category3" class="text-dark font-weight-bold"></label>
+				<div>
+					<select asp-for="Category3" asp-items="Html.GetEnumSelectList<Categories>()">
+						<option value="">Please select</option>
+					</select>
+				</div>
+				<span class="text-danger" asp-validation-for="Category3" ></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Photo" class="text-dark font-weight-bold"></label>
+				<div class="custom-file">
+					<input asp-for="Photo" class="form-control custom-file-input">
+					<label class="custom-file-label">Choose file...</label>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<button class="btn btn-success" type="submit">Sign in</button>
+			</div>
+		</form>
+	</article>
+</div>
+</div>

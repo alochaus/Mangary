@@ -1,0 +1,106 @@
+@model Mangary.ViewModels.Account.SignUpViewModel
+
+@{
+	ViewData["Title"] = "SignUp Page";
+}
+
+
+<div class="card mt-5 mx-auto rounded abc">
+	<article class="card-body">
+		<h1 class="card-title text-center mb-4 mt-1">Sign up</h1>
+		<hr />
+		<form method="POST" asp-controller="Account" asp-action="SignUp">
+			<div class="text-danger" asp-validation-summary="All"></div>
+
+			<div class="form-group">
+				<label asp-for="Username" class="text-dark font-weight-bold"></label>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" style="width:42px;"><i class="fa fa-user mx-auto"></i></span>
+					</div>
+					<input class="form-control" id="input-70" asp-for="Username" size="15"/>
+					<hr />
+					<span class="text-danger" asp-validation-for="Username" ></span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Email" class="text-dark font-weight-bold"></label>
+				<br />
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><i class="fa fa-envelope"></i></span>
+					</div>
+					<input class="form-control" id="input-70" asp-for="Email" />
+					<hr />
+					<span class="text-danger" asp-validation-for="Email" ></span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Password" class="text-dark font-weight-bold"></label>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><i class="fa fa-key"></i></span>
+					</div>
+					<input class="form-control" id="input-70" asp-for="Password" />
+					<hr />
+					<span class="text-danger" asp-validation-for="Password" ></span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="ConfirmPassword" class="text-dark font-weight-bold"></label>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" style="width:42px;"><i class="fa fa-lock mx-auto"></i></span>
+					</div>
+					<input class="form-control" id="input-70" asp-for="ConfirmPassword" />
+					<hr />
+					<span class="text-danger" asp-validation-for="ConfirmPassword" ></span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<button class="btn btn-success" type="submit">Sign in</button>
+			</div>
+		</form>
+	</article>
+</div>
+
+
+
+
+<!--
+<form method="POST">
+	<div class="text-danger" asp-validation-summary="All"></div>
+
+	<div class="form-group">
+		<label asp-for="Username"></label>
+		<input class="form-control" asp-for="Username" />
+		<span class="text-danger" asp-validation-for="Username" ></span>
+	</div>
+
+	<div class="form-group">
+		<label asp-for="Email"></label>
+		<input class="form-control" asp-for="Email" />
+		<span class="text-danger" asp-validation-for="Email" ></span>
+	</div>
+
+	<div class="form-group">
+		<label asp-for="Password"></label>
+		<input class="form-control" asp-for="Password" />
+		<span class="text-danger" asp-validation-for="Password" ></span>
+	</div>
+
+	<div class="form-group">
+		<label asp-for="ConfirmPassword"></label>
+		<input class="form-control" asp-for="ConfirmPassword" />
+		<span class="text-danger" asp-validation-for="ConfirmPassword" ></span>
+	</div>
+
+	<div class="form-group">
+		<button class="btn btn-success" type="submit">Sign in</button>
+	</div>
+</form>
+-->

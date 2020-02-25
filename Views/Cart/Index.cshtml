@@ -1,0 +1,53 @@
+@model IEnumerable<Mangary.ViewModels.Cart.CartViewModel>
+
+@{
+	ViewData["Title"] = "My Cart";
+}
+
+<div class="container rounded bg-light">
+	<form method="POST" asp-action="" asp-controller="">
+	<table class="table mt-3">
+		<tr>
+			<th></th>
+			<th class="d-none d-sm-table-cell">Cover</th>
+			<th>Name</th>
+			<th>Price</th>
+			<th>Quantity</th>
+		</tr>
+		@try
+		{
+			@foreach (var Manga in Model)
+			{
+				<tr>
+					<td class="text-center">
+						<a class="btn btn-danger" asp-action="DeleteFromCart" asp-controller="Cart" asp-route-ProductId="@Manga.ProductId">
+							<i class="fa fa-trash" aria-hidden="true"></i>
+						</a>
+					</td>
+					<td class="d-none d-sm-table-cell">
+						<a asp-action="ProductsPage" asp-controller="Product" asp-route-ProductId="@Manga.ProductId">
+							<img style="width: 100px" class="card-img-top" src="/UploadedPhotos/@Manga.PhotoPath" asp-append-version="true" />
+						</a>
+					</td>
+					<td>
+						<a asp-action="ProductsPage" asp-controller="Product" asp-route-ProductId="@Manga.ProductId">
+						@Manga.Name
+						</a>
+					</td>
+					<td>
+						<a asp-action="ProductsPage" asp-controller="Product" asp-route-ProductId="@Manga.ProductId">
+						$@Manga.Price USD
+						</a>	
+					</td>
+					<td>
+						<input asp-for="@Manga.Quantity" style="width:60px;"/>
+					</td>
+				</tr>
+			}
+		}
+		catch
+		{
+		}
+	</table>
+	</form>
+</div>

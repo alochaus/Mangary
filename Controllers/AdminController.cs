@@ -14,7 +14,10 @@ namespace Mangary.Controllers
 		private readonly RoleManager<IdentityRole> roleManager;
 		private readonly UserManager<IdentityUser> userManager;
 
-		public AdminController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+		public AdminController(
+			RoleManager<IdentityRole> roleManager,
+			UserManager<IdentityUser> userManager
+		)
 		{
 			this.roleManager = roleManager;
 			this.userManager = userManager;

@@ -17,7 +17,10 @@ namespace Mangary.Controllers
 		private readonly IWebHostEnvironment hostingEnvironment;
 		private readonly AppDbContext dbContext;
 
-		public ManagerController(IWebHostEnvironment hostingEnvironment, AppDbContext dbContext)
+		public ManagerController(
+			IWebHostEnvironment hostingEnvironment,
+			AppDbContext dbContext
+		)
 		{
 			this.hostingEnvironment = hostingEnvironment;
 			this.dbContext = dbContext;

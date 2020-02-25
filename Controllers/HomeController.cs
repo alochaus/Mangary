@@ -17,7 +17,10 @@ namespace Mangary.Controllers
 		private readonly ILogger<HomeController> _logger;
 		private readonly AppDbContext dbContext;
 
-		public HomeController(ILogger<HomeController> logger, AppDbContext dbContext)
+		public HomeController(
+			ILogger<HomeController> logger,
+			AppDbContext dbContext
+		)
 		{
 			_logger = logger;
 			this.dbContext = dbContext;

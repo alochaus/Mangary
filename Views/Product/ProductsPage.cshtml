@@ -22,9 +22,11 @@
 				<br />
 				<div class="text-center">
 					<p class="h5 text-success">$@Model.Price USD</p>
-					<a class="btn btn-primary" href="#">
-						<i class="fa fa-shopping-cart" aria-hidden="true"></i>  Add to cart
-					</a> 
+					<form method="POST" asp-action="AddToCart" asp-controller="Cart" asp-route-ProductId="@Model.ProductId">
+						<button type="submit" class="btn btn-primary">
+							<i class="fa fa-shopping-cart" aria-hidden="true"></i>  Add to cart
+						</button> 
+					</form>
 				</div>
 			</div>		
 		</div>

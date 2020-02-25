@@ -19,7 +19,10 @@ namespace Mangary.Controllers
 		private readonly AppDbContext dbContext;
 		private readonly UserManager<IdentityUser> userManager;
 
-		public ProductController(AppDbContext dbContext, UserManager<IdentityUser> userManager)
+		public ProductController(
+			AppDbContext dbContext,
+			UserManager<IdentityUser> userManager
+		)
 		{
 			this.dbContext = dbContext;
 			this.userManager = userManager;

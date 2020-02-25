@@ -19,5 +19,6 @@ namespace Mangary.Data
 
 		public DbSet<Product> Products { get; set; }
 		public DbSet<ProductCategories> ProductCategories { get; set; }
+		public DbSet<Cart> Cart { get; set; }
 	}
 }

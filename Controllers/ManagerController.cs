@@ -161,5 +161,20 @@ namespace Mangary.Controllers
 
 			return RedirectToAction("Index", "Home");
 		}
+
+		[HttpPost]
+		public IActionResult DeleteProduct(Guid ProductId)
+		{
+			IQueryable<Product> ProductInProducts = dbContext.Products.Where(x => x.ProductId == ProductId);
+			if(ProductInProducts.Any())
+			{
+				IQueryable<Cart> ProductInCart = dbContext.Cart.Where(x => x.ProductId == ProductId);
+
+				dbContext.Products.RemoveRange(ProductInProducts);
+				dbContext.Cart.RemoveRange(ProductInCart);
+				dbContext.SaveChanges();
+			}
+			return RedirectToAction("Index", "Home");
+		}
 	}
 }

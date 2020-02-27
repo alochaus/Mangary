@@ -7,9 +7,22 @@
 <div class="container rounded bg-light mt-2 py-3">
 	@if(ViewBag.HasManagerRole)
 	{
-		<a class="btn btn-warning" asp-action="EditProduct" asp-controller="Manager" asp-route-ProductId="@Model.ProductId">
-			<i class="fa fa-edit" aria-hidden="true"></i> Edit
-		</a> 
+		<div class="row justify-content-center pb-2">
+			<div class="p-2">
+				<a class="btn btn-warning" asp-action="EditProduct" asp-controller="Manager" asp-route-ProductId="@Model.ProductId">
+					<i class="fa fa-edit" aria-hidden="true"></i> Edit
+				</a> 
+			</div>
+
+			<div class="p-2">
+				<form method="POST" asp-action="DeleteProduct" asp-controller="Manager" asp-route-ProductId="@Model.ProductId">
+					<button type="submit" class="btn btn-danger">
+						<i class="fa fa-trash" aria-hidden="true"></i> Delete
+					</button>
+				</form>
+			</div>
+
+		</div>
 	}
 	<div class="my-auto">
 		<div class="row">

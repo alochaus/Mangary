@@ -5,7 +5,7 @@ namespace Mangary.ViewModels
 {
 	public class HomeViewModel
 	{
-		public List<Product> LatestProductsAdded	{ get; set; }
+		public List<Product> LatestProductsAdded { get; set; }
 /*
 		public List<Product> Action					{ get; set; }
 

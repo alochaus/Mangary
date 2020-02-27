@@ -8,29 +8,29 @@ namespace Mangary.ViewModels.Manager
 	{
 		[Required]
 		[MaxLength(100)]
-		public string		Name		{ get; set; }
+		public string Name { get; set; }
 
 		[MaxLength(3000)]
-		public string		Description	{ get; set; }
+		public string Description { get; set; }
 
 		[Required]
 		[Range(0.0, double.MaxValue)]
-		public decimal		Price		{ get; set; }
+		public decimal Price { get; set; }
 
 		[Required]
 		[Range(0, uint.MaxValue, ErrorMessage = "Quantity has to be greater or equal to one.")]
-		public uint			Quantity	{ get; set; }
+		public uint Quantity { get; set; }
 
 		[Required]
-		public Categories?	Category1	{ get; set; }
+		public Categories? Category1 { get; set; }
 
 		[Required]
-		public Categories?	Category2	{ get; set; }
+		public Categories? Category2 { get; set; }
 
 		[Required]
-		public Categories?	Category3	{ get; set; }
+		public Categories? Category3 { get; set; }
 
 		[Required]
-		public IFormFile	Photo		{ get; set; }
+		public IFormFile Photo { get; set; }
 	}
 }

@@ -47,7 +47,11 @@
 					<div class="card-body">
 						<h6 class="card-title">@Manga.Name</h6>
 						<p class="card-text text-success text-center h6">$@Manga.Price USD</p>
-						<a class="btn btn-primary" href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Add to cart</a>
+						<br />
+						<form method="POST" asp-action="AddToCart" asp-controller="Cart"
+						asp-route-ProductId="@Manga.ProductId">
+							<button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Add to cart</button>
+						</form>
 					</div>
 				</a>
 			</div>

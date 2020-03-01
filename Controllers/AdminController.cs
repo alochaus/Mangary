@@ -13,31 +13,35 @@ namespace Mangary.Controllers
 	{
 		private readonly RoleManager<IdentityRole> roleManager;
 		private readonly UserManager<IdentityUser> userManager;
+		private readonly SignInManager<IdentityUser> signInManager;
 
 		public AdminController(
 			RoleManager<IdentityRole> roleManager,
-			UserManager<IdentityUser> userManager
+			UserManager<IdentityUser> userManager,
+			SignInManager<IdentityUser> signInManager
 		)
 		{
 			this.roleManager = roleManager;
 			this.userManager = userManager;
+			this.signInManager = signInManager;
 		}
 
 		[AllowAnonymous]
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
+			IdentityUser User = await userManager.GetUserAsync(HttpContext.User);
 			bool AdminRoleExists = await roleManager.RoleExistsAsync("Admin");
 
-			if(!AdminRoleExists)
+			if(!AdminRoleExists && User != null)
 			{
 				IdentityRole AdminRole = new IdentityRole("Admin");
 				IdentityResult Result = await roleManager.CreateAsync(AdminRole);
 
 				if(Result.Succeeded)
 				{
-					IdentityUser User = await userManager.GetUserAsync(HttpContext.User);
 					await userManager.AddToRoleAsync(User, "Admin");
+					await signInManager.SignOutAsync();
 					return RedirectToAction("RoleManager", "Admin");
 				}
 			}

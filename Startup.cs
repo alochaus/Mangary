@@ -25,6 +25,7 @@ namespace Mangary
             services.AddDbContext<AppDbContext>(options => options.UseSqlite(Configuration.GetConnectionString("MangaryContext")));
 
             services.AddIdentity<IdentityUser, IdentityRole>(options => {
+				options.User.RequireUniqueEmail = true;
 			})
                 .AddEntityFrameworkStores<AppDbContext>();
 

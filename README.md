@@ -32,6 +32,7 @@ $ dotnet add package Microsoft.jQuery.Unobtrusive.Validation --version 3.2.11
 **Step 3: run it**
 ```bash
 $ dotnet restore
+$ dotnet ef database update
 $ dotnet run
 ```
 

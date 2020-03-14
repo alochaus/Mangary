@@ -12,8 +12,6 @@
 - **efcore**
 - **libman**
 
-*Make sure that the paths are pointing to existing files in Views/Shared/_Layout.cs.*
-
 ## How to install
 
 **Step 1: clone this repo**

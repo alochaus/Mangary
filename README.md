@@ -4,11 +4,11 @@
 
 ## Dependencies
 
-- **bootstrap**
-- **font-awesome-4.7.0**
-- **jquery**
-- **jquery-validation**
-- **jquery-validation-unobtrusive**
+- **bootstrap@4.3.1**
+- **font-awesome@4.7.0**
+- **jquery@3.3.1**
+- **jquery-validation@1.17.0**
+- **jquery-validation-unobtrusive@3.2.11**
 - **efcore**
 - **libman**
 

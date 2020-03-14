@@ -9,6 +9,8 @@
 - **jquery**
 - **jquery-validation**
 - **jquery-validation-unobtrusive**
+- **efcore**
+- **libman**
 
 *Make sure that the paths are pointing to existing files in Views/Shared/_Layout.cs.*
 
@@ -22,17 +24,19 @@ $ cd Mangary
 
 **Step 2: install dependencies**
 ```bash
-$ dotnet add package bootstrap --version 4.3.1
-$ dotnet add package font-awesome --version 4.7.0
-$ dotnet add package jQuery --version 3.3.1
-$ dotnet add package jQuery.Validation --version 1.17.0
-$ dotnet add package Microsoft.jQuery.Unobtrusive.Validation --version 3.2.11
+$ dotnet tool install -g dotnet-ef
+$ dotnet tool install -g Microsoft.Web.LibraryManager.Cli
+$ dotnet restore
+$ libman restore
+```
+
+**Step 4: create database**
+```bash
+$ dotnet ef database update
 ```
 
 **Step 3: run it**
 ```bash
-$ dotnet restore
-$ dotnet ef database update
 $ dotnet run
 ```
 

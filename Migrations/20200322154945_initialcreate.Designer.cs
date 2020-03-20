@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mangary.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200224213221_AddCart")]
-    partial class AddCart
+    [Migration("20200322154945_initialcreate")]
+    partial class initialcreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

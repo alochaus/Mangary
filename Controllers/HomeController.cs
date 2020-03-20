@@ -29,7 +29,7 @@ namespace Mangary.Controllers
 		public IActionResult Index()
 		{
 			List<Product> LatestProductsAdded = new List<Product>();
-			LatestProductsAdded = dbContext.Products.OrderByDescending(x => x.Id).Take(3).ToList();
+			LatestProductsAdded.AddRange(dbContext.Products.OrderByDescending(x => x.Id).Take(5));
 
 			HomeViewModel homeViewModel = new HomeViewModel()
 			{
@@ -37,11 +37,19 @@ namespace Mangary.Controllers
 			};
 
 			return View(homeViewModel);
+
+			/*
+			IQueryable<ProductCategories> ActionId = ProductServices.GetProductIdByCategoryId(dbContext, "Action");
+			List<Product> Action = new List<Product>();
+			foreach(ProductCategories i in ActionId)
+				Action.AddRange(ProductServices.GetProduct(dbContext, i.ProductId));
+			 */
+
 			/*
 			ProductServices productServices = new ProductServices(dbContext);
 
-			List<ProductCategories> ActionId = productServices.GetProductCategories("Action");
-			List<ProductCategories> PsychologicalId = productServices.GetProductCategories("Psychological");
+			List<ProductCategories> ActionId = productServices.GetProductIdByCategoryId("Action");
+			List<ProductCategories> PsychologicalId = productServices.GetProductIdByCategoryId("Psychological");
 
 			List<Product> Action = new List<Product>();
 			List<Product> Psychological = new List<Product>();

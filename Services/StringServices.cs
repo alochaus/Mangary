@@ -3,9 +3,9 @@ using System.Text;
 
 namespace Mangary.Services
 {
-	public class StringServices
+	public static class StringServices
 	{
-		public string Cleaner(string DirtyString)
+		public static string Cleaner(string DirtyString)
 		{
 			HashSet<char> removeChars = new HashSet<char>("?&^$#@!()+-,:;<>’\'-_*");
 			StringBuilder result = new StringBuilder(DirtyString.Length);

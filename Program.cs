@@ -22,7 +22,7 @@ namespace Mangary
 			{
 				RoleManager<IdentityRole> roleManager = Scope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
 
-				DbSeeder.SeedDataAsync(roleManager);
+				await DbSeeder.SeedDataAsync(roleManager);
 			}
 
 			await Host.RunAsync();

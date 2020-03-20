@@ -1,10 +1,11 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
 namespace Mangary.Data
 {
 	public static class DbSeeder
 	{
-		public static async void SeedDataAsync(RoleManager<IdentityRole> roleManager)
+		public static async Task SeedDataAsync(RoleManager<IdentityRole> roleManager)
 		{
 			bool ManagerExists = await roleManager.RoleExistsAsync("Manager");
 

@@ -4,6 +4,7 @@
 Mangary.db
 wwwroot/UploadedPhotos/*
 wwwroot/lib/*
+.vscode/*
 
 # User-specific files
 *.suo

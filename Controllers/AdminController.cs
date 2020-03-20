@@ -91,14 +91,7 @@ namespace Mangary.Controllers
 					RoleName = role.Name,
 				};
 
-				if(await userManager.IsInRoleAsync(User, role.Name))
-				{
-					editRolesViewModel.IsSelected = true;
-				}
-				else
-				{
-					editRolesViewModel.IsSelected = false;
-				}
+				editRolesViewModel.IsSelected = await userManager.IsInRoleAsync(User, role.Name);
 				model.Add(editRolesViewModel);
 			}
 			return View(model);

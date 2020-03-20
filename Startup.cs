@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Mangary.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mangary
 {
@@ -22,7 +22,8 @@ namespace Mangary
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options => options.UseSqlite(Configuration.GetConnectionString("MangaryContext")));
+            services.AddDbContext<AppDbContext>(options =>
+				options.UseNpgsql(Environment.GetEnvironmentVariable("MangaryConnectionString")));
 
             services.AddIdentity<IdentityUser, IdentityRole>(options => {
 				options.User.RequireUniqueEmail = true;

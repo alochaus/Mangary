@@ -12,6 +12,6 @@ namespace Mangary.Models
 		public Guid ProductId { get; set; }
 		
 		[Required]
-		public Categories? CategoryId { get; set; }
+		public Categories? CategoryId { get; set; } = 0;
 	}
 }

@@ -33,9 +33,9 @@ namespace Mangary.Controllers
 		{
 			if(string.IsNullOrEmpty(id))
 			{
-				string[] CategoryName = Enum.GetNames(typeof(Categories));
+				string[] categoryName = Enum.GetNames(typeof(Categories));
 
-				List<CategoryViewModel> categoryViewModel = new List<CategoryViewModel>()
+				List<CategoryViewModel> categoryviewModel = new List<CategoryViewModel>()
 				{
 					new CategoryViewModel
 					{
@@ -44,34 +44,83 @@ namespace Mangary.Controllers
 					}
 				};
 
-				for(int i=1; i<CategoryName.Count(); i++)
+				for(int i=1; i<categoryName.Count(); i++)
 				{
-					categoryViewModel.Add(
+					categoryviewModel.Add(
 						new CategoryViewModel
 						{
-							Name = CategoryName[i],
+							Name = categoryName[i],
 							IsSelected = false
 						}
 					);
 				}
 
-				return View(categoryViewModel);
+				return View(categoryviewModel);
 			}
 
 			string[] categories = id.Split("_");
+			List<int> categoryId = new List<int>();
 
+			foreach(string cat in categories)
+				categoryId.Add(ProductServices.CategoryParser<Categories>(cat));
+
+			HashSet<Product> ProdSet = new HashSet<Product>();
+			ProdSet.Union(
+				ProductServices.GetProduct
+				(dbContext, ProductServices.GetProductIdByCategoryId
+				(dbContext, categoryId[0])
+				.ToArray()[0])
+				.ToArray()
+			);
+
+			for(int i=1; categoryId.Count() < 2 && i<categories.Count();i++)
+			{
+				ProdSet.ExceptWith(
+					ProductServices.GetProduct
+					(dbContext, ProductServices.GetProductIdByCategoryId
+					(dbContext, categoryId[i])
+					.ToArray()[i])
+					.ToArray()
+				);
+			}
+
+			string[] CategoryName = Enum.GetNames(typeof(Categories));
+
+			List<CategoryViewModel> categoryViewModel = new List<CategoryViewModel>()
+			{
+				new CategoryViewModel
+				{
+					MangaList = ProdSet.ToList(),
+					Name = CategoryName[0],
+					IsSelected = false
+				}
+			};
+
+			for(int i=1; i<CategoryName.Count(); i++)
+			{
+				categoryViewModel.Add(
+					new CategoryViewModel
+					{
+						Name = CategoryName[i],
+						IsSelected = false
+					}
+				);
+			}
+
+			return View(categoryViewModel);
+			/*
 			// SELECT ProductId FROM ProductCategories WHERE ProductId IN (SELECT ProductId FROM ProductCategories WHERE CategoryId = 1) AND CategoryId = 2;
+
 			string Query = "ZXCV SELECT ProductId FROM ProductCategories WHERE CategoryId = CATEGORIES_PARAM VBNM";
 
 			Regex rgx = new Regex(@"^[a-z_A-Z]+$");
 			Match matches = rgx.Match(id);
-			ProductServices productServices = new ProductServices(dbContext);
 
 			if(rgx.IsMatch(id))
 			{
 				if(categories.Length == 1)
 				{
-					int CategoryId = productServices.CategoryParser<Categories>(categories[0]);
+					int CategoryId = ProductServices.CategoryParser<Categories>(categories[0]);
 					Query = Query.Replace("CATEGORIES_PARAM", CategoryId.ToString());
 					Query = Query.Replace("ZXCV SELECT ProductId", "SELECT *");
 					Query = Query.Replace(" VBNM", string.Empty);
@@ -80,7 +129,7 @@ namespace Mangary.Controllers
 				{
 					for(int i=0;i<categories.Length;i++)
 					{
-						int CategoryId = productServices.CategoryParser<Categories>(categories[i]);
+						int CategoryId = ProductServices.CategoryParser<Categories>(categories[i]);
 						Query = Query.Replace("CATEGORIES_PARAM", CategoryId.ToString());
 						Query = Query.Replace("ZXCV ", "ZXCV SELECT ProductId FROM ProductCategories WHERE ProductId IN (");
 						Query = Query.Replace(" VBNM", ") AND CategoryId = CATEGORIES_PARAM VBNM");	
@@ -124,6 +173,7 @@ namespace Mangary.Controllers
 				return View(categoryViewModel);
 			}
 			return RedirectToAction("Index", "Home");
+			 */
 		}
 
 		[HttpGet("Search")]
@@ -131,13 +181,11 @@ namespace Mangary.Controllers
 		{
 			if(string.IsNullOrEmpty(pattern)) return RedirectToAction("Index", "Home");
 
-			StringServices stringServices = new StringServices();
-			string Pattern = stringServices.Cleaner(pattern);
+			string Pattern = StringServices.Cleaner(pattern);
 
 			List<Product> ProductList = new List<Product>();
 
-			ProductServices productServices = new ProductServices(dbContext);
-			IQueryable<Product> Temp = productServices.SearchFor(Pattern);
+			IQueryable<Product> Temp = ProductServices.SearchFor(dbContext, Pattern);
 			ProductList.AddRange(Temp);
 
 			return View(ProductList);

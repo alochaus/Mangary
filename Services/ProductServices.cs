@@ -7,42 +7,39 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mangary.Services
 {
-	public class ProductServices
+	public static class ProductServices
 	{
-		private readonly AppDbContext dbContext;
-
-		public ProductServices(AppDbContext dbContext)
+		public static IQueryable<Guid> GetProductIdByCategoryId(AppDbContext dbContext, int id)
 		{
-			this.dbContext = dbContext;
+			return dbContext.ProductCategories.Where(x => x.CategoryId.Equals(id)).Select(x => x.ProductId);
+//			return dbContext.ProductCategories.FromSqlRaw($"SELECT * FROM ProductCategories WHERE CategoryId = {id}").ToList();
 		}
 
-		public List<ProductCategories> GetProductCategories(int id)
-		{
-			return dbContext.ProductCategories.FromSqlRaw($"SELECT * FROM ProductCategories WHERE CategoryId = {id}").ToList();
-		}
-
-		public List<ProductCategories> GetProductCategories(string name)
+		public static IQueryable<Guid> GetProductIdByCategoryId(AppDbContext dbContext, string name)
 		{
 			int id = CategoryParser<Categories>(name);
-			return dbContext.ProductCategories.FromSqlRaw($"SELECT * FROM ProductCategories WHERE CategoryId = {id}").ToList();
+			return dbContext.ProductCategories.Where(x => x.CategoryId.Equals(id)).Select(x => x.ProductId);
+//			return dbContext.ProductCategories.FromSqlRaw($"SELECT * FROM ProductCategories WHERE CategoryId = {id}").ToList();
 		}
 
-		public IQueryable<Product> GetProduct(Guid ProductId)
+		public static IQueryable<Product> GetProduct(AppDbContext dbContext, Guid ProductId)
 		{
-			return dbContext.Products.FromSqlRaw($"SELECT * FROM Products WHERE ProductId = \"{ProductId.ToString().ToUpper()}\"");
+			return dbContext.Products.Where(x => x.ProductId == ProductId);
+//			return dbContext.Products.FromSqlRaw($"SELECT * FROM Products WHERE ProductId = \"{ProductId.ToString().ToUpper()}\"");
 		}
 
-		public int CategoryParser<T>(string name) where T: new()
+		public static int CategoryParser<T>(string name) where T: new()
 		{
 			return (int)Enum.Parse(typeof(T), name);
 		}
 
-		public IQueryable<Product> SearchFor(string pattern)
+		public static IQueryable<Product> SearchFor(AppDbContext dbContext, string pattern)
 		{
 			Console.WriteLine("\n\n\n\n\n\n\n\n\n");
 			Console.WriteLine($"SELECT * FROM Products WHERE Name LIKE \"%{pattern}%\"");
 			Console.WriteLine("\n\n\n\n\n\n\n\n\n");
-			return dbContext.Products.FromSqlRaw($"SELECT * FROM Products WHERE Name LIKE \"%{pattern}%\"");
+			return dbContext.Products.Where(x => EF.Functions.Like(x.Name, $"%{pattern}%"));
+//			return dbContext.Products.FromSqlRaw($"SELECT * FROM Products WHERE Name LIKE \"%{pattern}%\"");
 		}
 	}
 }

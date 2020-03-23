@@ -66,6 +66,15 @@ namespace Mangary.Controllers
 				)
 			));
 
+			for(int i=1; i<CategoryId.Count(); i++)
+			{
+				MangaList = MangaList.Intersect(ProductServices.GetProducts(
+					dbContext, ProductServices.GetProductIdByCategoryId(
+						dbContext, CategoryId[i]
+					)
+				)).ToList();
+			}
+
 			categoryViewModel.Add(
 				new CategoryViewModel
 				{

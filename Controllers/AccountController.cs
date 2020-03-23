@@ -53,27 +53,19 @@ namespace Mangary.Controllers
 					UserName = model.Username,
 					Email = model.Email
 				};
-				try
-				{
-					IdentityResult Result = await userManager.CreateAsync(User, model.Password);
-					if(Result.Succeeded)
-					{
-						await signInManager.SignInAsync(User, isPersistent: false);
-						return RedirectToAction("Index", "Home");
-					}
 
-					foreach(var err in Result.Errors)
-					{
-						ModelState.AddModelError(string.Empty, err.Description);
-					}
-
-				}
-				catch(System.Exception e)
+				IdentityResult Result = await userManager.CreateAsync(User, model.Password);
+				if(Result.Succeeded)
 				{
-					System.Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n");
-					System.Console.WriteLine(e);
-					System.Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n");
+					await signInManager.SignInAsync(User, isPersistent: false);
+					return RedirectToAction("Index", "Home");
 				}
+
+				foreach(var err in Result.Errors)
+				{
+					ModelState.AddModelError(string.Empty, err.Description);
+				}
+
 			}
 			return View(model);
 		}

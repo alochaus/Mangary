@@ -35,6 +35,7 @@ $ dotnet ef database update
 
 **Step 3: run it**
 ```bash
+$ mkdir wwwroot/UploadedPhotos
 $ dotnet run
 ```
 

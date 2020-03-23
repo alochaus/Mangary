@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Mangary.Models;
 using Mangary.Data;
-using Mangary.Services;
 using Mangary.ViewModels;
 
 namespace Mangary.Controllers
@@ -37,44 +35,8 @@ namespace Mangary.Controllers
 			};
 
 			return View(homeViewModel);
-
-			/*
-			IQueryable<ProductCategories> ActionId = ProductServices.GetProductIdByCategoryId(dbContext, "Action");
-			List<Product> Action = new List<Product>();
-			foreach(ProductCategories i in ActionId)
-				Action.AddRange(ProductServices.GetProduct(dbContext, i.ProductId));
-			 */
-
-			/*
-			ProductServices productServices = new ProductServices(dbContext);
-
-			List<ProductCategories> ActionId = productServices.GetProductIdByCategoryId("Action");
-			List<ProductCategories> PsychologicalId = productServices.GetProductIdByCategoryId("Psychological");
-
-			List<Product> Action = new List<Product>();
-			List<Product> Psychological = new List<Product>();
-
-			foreach(ProductCategories row in ActionId)
-			{
-				IQueryable<Product> Temp = productServices.GetProduct(row.ProductId);
-				Action.AddRange(Temp);
-			}
-
-			foreach(ProductCategories row in PsychologicalId)
-			{
-				IQueryable<Product> Temp = productServices.GetProduct(row.ProductId);
-				Psychological.AddRange(Temp);
-			}
-
-			HomeViewModel model = new HomeViewModel()
-			{
-				Action = Action,
-				Psychological = Psychological
-			};
-
-			return View(model);
-			*/
 		}
+
 		public IActionResult About()	=> View();
 		public IActionResult Contact()	=> View();
 		public IActionResult Privacy()	=> View();

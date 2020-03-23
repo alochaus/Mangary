@@ -11,21 +11,23 @@ namespace Mangary.Services
 	{
 		public static IQueryable<Guid> GetProductIdByCategoryId(AppDbContext dbContext, int id)
 		{
-			return dbContext.ProductCategories.Where(x => x.CategoryId.Equals(id)).Select(x => x.ProductId);
-//			return dbContext.ProductCategories.FromSqlRaw($"SELECT * FROM ProductCategories WHERE CategoryId = {id}").ToList();
+			return dbContext.ProductCategories.Where(x => x.CategoryId == (Categories?)id).Select(x => x.ProductId);
 		}
 
 		public static IQueryable<Guid> GetProductIdByCategoryId(AppDbContext dbContext, string name)
 		{
 			int id = CategoryParser<Categories>(name);
-			return dbContext.ProductCategories.Where(x => x.CategoryId.Equals(id)).Select(x => x.ProductId);
-//			return dbContext.ProductCategories.FromSqlRaw($"SELECT * FROM ProductCategories WHERE CategoryId = {id}").ToList();
+			return GetProductIdByCategoryId(dbContext, id);
 		}
 
 		public static IQueryable<Product> GetProduct(AppDbContext dbContext, Guid ProductId)
 		{
 			return dbContext.Products.Where(x => x.ProductId == ProductId);
-//			return dbContext.Products.FromSqlRaw($"SELECT * FROM Products WHERE ProductId = \"{ProductId.ToString().ToUpper()}\"");
+		}
+
+		public static IQueryable<Product> GetProducts(AppDbContext dbContext, IQueryable<Guid> ProductId)
+		{
+			return dbContext.Products.Where(x => ProductId.Any(y => x.ProductId == y));
 		}
 
 		public static int CategoryParser<T>(string name) where T: new()
@@ -35,11 +37,7 @@ namespace Mangary.Services
 
 		public static IQueryable<Product> SearchFor(AppDbContext dbContext, string pattern)
 		{
-			Console.WriteLine("\n\n\n\n\n\n\n\n\n");
-			Console.WriteLine($"SELECT * FROM Products WHERE Name LIKE \"%{pattern}%\"");
-			Console.WriteLine("\n\n\n\n\n\n\n\n\n");
 			return dbContext.Products.Where(x => EF.Functions.Like(x.Name, $"%{pattern}%"));
-//			return dbContext.Products.FromSqlRaw($"SELECT * FROM Products WHERE Name LIKE \"%{pattern}%\"");
 		}
 	}
 }

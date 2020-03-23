@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Mangary.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Mangary.Models;
 using Mangary.Services;
 using Mangary.ViewModels.Products;
@@ -31,70 +29,51 @@ namespace Mangary.Controllers
 		[HttpGet("[controller]/[action]")]
 		public IActionResult Category(string id)
 		{
-			if(string.IsNullOrEmpty(id))
-			{
-				string[] categoryName = Enum.GetNames(typeof(Categories));
+			string[] CategoryName = Enum.GetNames(typeof(Categories));
+			List<CategoryViewModel> categoryViewModel = new List<CategoryViewModel>();
 
-				List<CategoryViewModel> categoryviewModel = new List<CategoryViewModel>()
-				{
+			if(String.IsNullOrEmpty(id))
+			{
+				categoryViewModel.Add(
 					new CategoryViewModel
 					{
-						Name = "None",
-						IsSelected = false
+						Name="None",
+						IsSelected=false
 					}
-				};
+				);
 
-				for(int i=1; i<categoryName.Count(); i++)
+				for(int i=1; i<CategoryName.Count(); i++)
 				{
-					categoryviewModel.Add(
+					categoryViewModel.Add(
 						new CategoryViewModel
 						{
-							Name = categoryName[i],
+							Name = CategoryName[i],
 							IsSelected = false
 						}
 					);
 				}
-
-				return View(categoryviewModel);
+				return View(categoryViewModel);
 			}
-
 			string[] categories = id.Split("_");
-			List<int> categoryId = new List<int>();
+			List<int> CategoryId = new List<int>();
+			foreach(string category in categories)
+				CategoryId.Add(ProductServices.CategoryParser<Categories>(category));
+			
+			List<Product> MangaList = new List<Product>();
+			MangaList.AddRange(ProductServices.GetProducts(
+				dbContext, ProductServices.GetProductIdByCategoryId(
+					dbContext, CategoryId[0]
+				)
+			));
 
-			foreach(string cat in categories)
-				categoryId.Add(ProductServices.CategoryParser<Categories>(cat));
-
-			HashSet<Product> ProdSet = new HashSet<Product>();
-			ProdSet.Union(
-				ProductServices.GetProduct
-				(dbContext, ProductServices.GetProductIdByCategoryId
-				(dbContext, categoryId[0])
-				.ToArray()[0])
-				.ToArray()
-			);
-
-			for(int i=1; categoryId.Count() < 2 && i<categories.Count();i++)
-			{
-				ProdSet.ExceptWith(
-					ProductServices.GetProduct
-					(dbContext, ProductServices.GetProductIdByCategoryId
-					(dbContext, categoryId[i])
-					.ToArray()[i])
-					.ToArray()
-				);
-			}
-
-			string[] CategoryName = Enum.GetNames(typeof(Categories));
-
-			List<CategoryViewModel> categoryViewModel = new List<CategoryViewModel>()
-			{
+			categoryViewModel.Add(
 				new CategoryViewModel
 				{
-					MangaList = ProdSet.ToList(),
+					MangaList = MangaList,
 					Name = CategoryName[0],
 					IsSelected = false
 				}
-			};
+			);
 
 			for(int i=1; i<CategoryName.Count(); i++)
 			{
@@ -108,72 +87,6 @@ namespace Mangary.Controllers
 			}
 
 			return View(categoryViewModel);
-			/*
-			// SELECT ProductId FROM ProductCategories WHERE ProductId IN (SELECT ProductId FROM ProductCategories WHERE CategoryId = 1) AND CategoryId = 2;
-
-			string Query = "ZXCV SELECT ProductId FROM ProductCategories WHERE CategoryId = CATEGORIES_PARAM VBNM";
-
-			Regex rgx = new Regex(@"^[a-z_A-Z]+$");
-			Match matches = rgx.Match(id);
-
-			if(rgx.IsMatch(id))
-			{
-				if(categories.Length == 1)
-				{
-					int CategoryId = ProductServices.CategoryParser<Categories>(categories[0]);
-					Query = Query.Replace("CATEGORIES_PARAM", CategoryId.ToString());
-					Query = Query.Replace("ZXCV SELECT ProductId", "SELECT *");
-					Query = Query.Replace(" VBNM", string.Empty);
-				}
-				else
-				{
-					for(int i=0;i<categories.Length;i++)
-					{
-						int CategoryId = ProductServices.CategoryParser<Categories>(categories[i]);
-						Query = Query.Replace("CATEGORIES_PARAM", CategoryId.ToString());
-						Query = Query.Replace("ZXCV ", "ZXCV SELECT ProductId FROM ProductCategories WHERE ProductId IN (");
-						Query = Query.Replace(" VBNM", ") AND CategoryId = CATEGORIES_PARAM VBNM");	
-					}
-					Query = Query.Replace("ZXCV SELECT ProductId FROM ProductCategories WHERE ProductId IN (SELECT ProductId", "SELECT *");
-					Query = Query.Replace(") AND CategoryId = CATEGORIES_PARAM VBNM", string.Empty);
-				}
-
-				List<ProductCategories> rows = dbContext.ProductCategories.FromSqlRaw(Query).ToList();
-				List<Product> ProductList = new List<Product>();
-
-				foreach(ProductCategories row in rows)
-				{
-					IQueryable<Product> Temp = dbContext.Products.FromSqlRaw($"SELECT * FROM Products WHERE ProductId = \"{row.ProductId.ToString().ToUpper()}\"");
-					ProductList.AddRange(Temp);
-				}
-
-				string[] CategoryName = Enum.GetNames(typeof(Categories));
-
-				List<CategoryViewModel> categoryViewModel = new List<CategoryViewModel>()
-				{
-					new CategoryViewModel
-					{
-						MangaList = ProductList,
-						Name = CategoryName[0],
-						IsSelected = false
-					}
-				};
-
-				for(int i=1; i<CategoryName.Count(); i++)
-				{
-					categoryViewModel.Add(
-						new CategoryViewModel
-						{
-							Name = CategoryName[i],
-							IsSelected = false
-						}
-					);
-				}
-
-				return View(categoryViewModel);
-			}
-			return RedirectToAction("Index", "Home");
-			 */
 		}
 
 		[HttpGet("Search")]
@@ -217,7 +130,6 @@ namespace Mangary.Controllers
 			try
 			{
 				ViewBag.HasManagerRole = await userManager.IsInRoleAsync(User, "Manager");
-				Console.Write("\n\n\n\n\n{0}\n\n\n\n\n", ViewBag.HasManagerRole.ToString());
 			}
 			catch
 			{

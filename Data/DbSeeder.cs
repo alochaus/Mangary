@@ -7,7 +7,7 @@ namespace Mangary.Data
 	{
 		public static async Task SeedDataAsync(RoleManager<IdentityRole> roleManager)
 		{
-			System.Boolean ManagerExists = await roleManager.RoleExistsAsync("Manager");
+			bool ManagerExists = await roleManager.RoleExistsAsync("Manager");
 
 			if(!ManagerExists)
 			{

@@ -84,7 +84,7 @@ namespace Mangary.Controllers
 
 			List<EditRolesViewModel> model = new List<EditRolesViewModel>();
 
-			foreach(IdentityRole role in roleManager.Roles)
+			foreach(IdentityRole role in roleManager.Roles.ToList())
 			{
 				EditRolesViewModel editRolesViewModel = new EditRolesViewModel
 				{
@@ -94,6 +94,7 @@ namespace Mangary.Controllers
 				editRolesViewModel.IsSelected = await userManager.IsInRoleAsync(User, role.Name);
 				model.Add(editRolesViewModel);
 			}
+
 			return View(model);
 		}
 

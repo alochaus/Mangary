@@ -18,7 +18,7 @@ namespace Mangary
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddDbContext<AppDbContext>(options =>
-				options.UseSqlite(Configuration.GetConnectionString("Mangary")));
+				options.UseNpgsql(System.Environment.GetEnvironmentVariable("MangaryConnectionString")));
 
 			services.AddIdentity<IdentityUser, IdentityRole>(options => {
 				options.User.RequireUniqueEmail = true;

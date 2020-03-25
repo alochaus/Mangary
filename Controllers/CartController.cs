@@ -78,14 +78,11 @@ namespace Mangary.Controllers
 		public async Task<IActionResult> Index()
 		{
 			IdentityUser User = await userManager.GetUserAsync(HttpContext.User);
-			IQueryable<Cart> cart = dbContext.Cart.Where(x => x.Email == User.Email);
+			List<Guid> cart = dbContext.Cart.Where(x => x.Email == User.Email).Select(x => x.ProductId).ToList();
 			List<Product> Products = new List<Product>();
 
-			foreach(Cart row in cart)
-			{
-				Product product = dbContext.Products.Where(x => x.ProductId == row.ProductId).SingleOrDefault();
-				Products.Add(product); 
-			}
+			List<Product> prod = dbContext.Products.Where(x => cart.Contains(x.ProductId)).ToList();
+			Products.AddRange(prod); 
 			
 			List<CartViewModel> model = new List<CartViewModel>();
 

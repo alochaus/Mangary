@@ -39,6 +39,8 @@ $ libman restore
 export MangaryConnectionString="YourConnectionString"
 ```
 *Note: keep the double quotes.*
+
+Your connection string should look like this:
 ```bash
 Host=localhost;Database=mangary;Username=aloc;Password=mysupersecretpassword
 ```

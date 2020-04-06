@@ -1,16 +1,13 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
+﻿a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
 }
 
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
+nav a {
+  color: #fff;
 }
+
 
 .btn-primary {
   color: #fff;
@@ -80,20 +77,24 @@ body {
 
 #signout
 {
-	/*
-	padding-bottom: 0.0rem;
-	border-bottom-width: 0px;
-	padding-top: 0.5rem;
-	*/
-	border-top-width: 0px;
-	/*
+	color: #fff;
+	padding-right: 8px;
 	border-left-width: 0px;
-	padding-left: 0.4rem;
-	*/
-	padding-right: 0px;
-	/*
+	border-top-width: 0px;
 	border-right-width: 0px;
-	*/
+	border-bottom-width: 0px;
+}
+#signout:hover {
+	color: #0056b3;
+}
+
+#cart {
+	padding-bottom: 2.75px;
+	padding-top: 0px;
+}
+
+.nav-link:hover {
+	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
 .footer {
@@ -108,7 +109,6 @@ body {
 }
 .darkred {
 	color: #bd0029;
-
 }
 
 .active {
@@ -117,109 +117,70 @@ body {
 	color: #f8f9fa;
 }
 
-
-.search {
-	display: table;
-  }
-  .search input {
-	background: none;
-	border: none;
-	outline: none;
-	width: 28px;
-	min-width: 0;
-	padding: 0;
-	z-index: 1;
-	position: relative;
-	line-height: 18px;
-	margin: 5px 0;
-	font-size: 14px;
-	-webkit-appearance: none;
-	font-family: 'Mukta Malar';
-	-webkit-transition: all .6s ease;
-	transition: all .6s ease;
-	cursor: pointer;
-	color: #fff;
-	/* color: #bd0029; */
-  }
-  .search input + div {
-	position: relative;
-	height: 28px;
+@media (max-width: 575.98px) { .abc { width: 90%; } }
+@media (max-width: 768px) { .links { width: 100%; } }
+@media (max-width: 567px) { div.search-box { width: 100%; }}
+@media (max-width: 580px) { #search-box { width: 75%; } }
+@media (max-width: 810px) { #nav-1st-div { justify-content: center; }}
+@media (min-width: 811px) { #nav-1st-div { justify-content: space-between;}}
+.bg-dots {
 	width: 100%;
-	margin: -28px 0 0 0;
-  }
-  .search input + div svg {
-	display: block;
-	position: absolute;
-	height: 28px;
-	width: 160px;
-	right: 0;
-	top: 0;
-	fill: none;
-/*	stroke: #bd0029; */
-	stroke: #fff;
-	stroke-width: 1.5px;
-	stroke-dashoffset: 271.908;
-	stroke-dasharray: 59 212.908;
-	-webkit-transition: all .6s ease;
-	transition: all .6s ease;
-  }
-  .search input:not(:placeholder-shown), .search input:focus {
-	width: 160px;
-	padding: 0 4px;
-	cursor: text;
-  }
-  .search input:not(:placeholder-shown) + div svg, .search input:focus + div svg {
-	stroke-dasharray: 150 212.908;
-	stroke-dashoffset: 300;
-  }
-  
-  ::-moz-selection {
-	background: rgba(255, 255, 255, 0.2);
-  }
-  
-  ::selection {
-	background: rgba(255, 255, 255, 0.2);
-  }
-  
-  ::-moz-selection {
-	background: rgba(255, 255, 255, 0.2);
-  }
-  
-  html {
-	box-sizing: border-box;
-	-webkit-font-smoothing: antialiased;
-  }
-  
-  * {
-	box-sizing: inherit;
-  }
-  *:before, *:after {
-	box-sizing: inherit;
-  }
-
-body {
-  /* Location of the image */
-  background-image: url(/images/background.jpg);
-  
-  /* Image is centered vertically and horizontally at all times */
-  background-position: center center;
-  
-  /* Image doesn't repeat */
-  background-repeat: no-repeat;
-  
-  /* Makes the image fixed in the viewport so that it doesn't move when 
-     the content height is greater than the image height */
-  background-attachment: fixed;
-  
-  /* This is what makes the background image rescale based on its container's size */
-  background-size: cover;
-  
-  /* Pick a solid background color that will be displayed while the background image is loading */
-  background-color:#464646;
-  
-  /* SHORTHAND CSS NOTATION
-   * background: url(background-photo.jpg) center center cover no-repeat fixed;
-   */
+	min-width: 1020px;
+	z-index: 20;
+	background: url(/images/bg.png) center top repeat;
 }
 
-@media (max-width: 575.98px) { .abc { width: 90%; } }
+.nav-brand > a > img {
+	width: 160px;
+	display: block;
+}
+
+.navbar-toggler {
+	position: absolute;
+	right: 4%;
+	top: 30px;
+	font-size: 23pt;
+	color: white;
+	z-index: 1;
+}
+
+input.search-box[type="text"] {
+	outline: none;
+	box-shadow:none !important;
+	border-radius: 20px;
+	border:5px solid #fff !important;
+	width: 400px;
+	background-color: #fff;
+}
+
+div.search-box {
+	top: 32.5px;
+	left: 30%;
+}
+
+.rounded20 {
+	border-radius: 20px;
+}
+.rounded100 {
+	border-radius: 20px;
+}
+
+#search-box-btn {
+	color: #ba1619;
+}
+
+.nav-bg {
+	background-image: linear-gradient(15deg, #b31217 0%, #e52d27 100%) 
+}
+
+.bg-dark {
+	background-color: #222831 !important;
+}
+
+.bg {
+	background-color: #e0e0e0 !important;
+}
+
+.bg-light {
+	background-color: #f3f3f3 !important;
+}

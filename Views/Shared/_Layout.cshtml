@@ -11,87 +11,65 @@
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>
-<!--
-	<button class="btn btn-warning " onclick="$('#jumbotron').toggle();" style="position: absolute; margin-left: 10px; margin-top: 10px; border-radius: 25px;">X</button>
-	<div id="jumbotron" class="jumbotron bg-danger" style="margin-bottom:0px; border-radius:0px">
-		<h1 style="text-align:center; font-size:30pt; color:#eeeeee">50% OFF ON WATAMOTE</h1>
-	</div>
--->
 
-	<div class="sticky-top">
-		<nav class="navbar navbar-expand-sm navbar-dark bg-red">
-			<a class="navbar-brand font-weight-bold" asp-action="Index" asp-controller="Home"><span class="text-white">Mangary</span></a>
-			<button class="navbar-toggler" data-toggle="collapse" data-target="#nav"><span class="navbar-toggler-icon"></span></button>
-			<div class="collapse navbar-collapse text-center" id="nav">
-				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" asp-action="Index" asp-controller="Home"><span is-active-route asp-controller="Home" asp-action="Index">Home</span></a></li>
-					<li class="nav-item"><a class="nav-link" asp-action="Category" asp-controller="Product"><span is-active-route asp-controller="Product" asp-action="Category">Categories</span></a></li>
-					<li class="nav-item"><a class="nav-link" asp-action="Contact" asp-controller="Home"><span is-active-route asp-controller="Home" asp-action="Contact">Contact</span></a></li>
-					@if(signInManager.IsSignedIn(User))
-					{
-						<li class="nav-item">
-							<form method="post" asp-action="SignOut" asp-controller="Account">
-									<button id="signout" type="submit" class="nav-link btn btn-link">
-										Sign out
-									</button>
-							</form>
-						</li>
-					}
-					else
-					{
-						<li class="nav-item"><a class="nav-link" asp-action="SignIn" asp-controller="Account"><span is-active-route asp-controller="Account" asp-action="SignIn">Sign in</span></a></li>
-						<li class="nav-item"><a class="nav-link" asp-action="SignUp" asp-controller="Account"><span is-active-route asp-controller="Account" asp-action="SignUp">Sign up</span></a></li>
-					}
-				</ul>
-				<ul class="navbar-nav ml-auto">
-					<div class="my-auto">
-					<li class="nav-item">
-					<div class="ml-auto">
-						<form class="form-inline my-2 my-lg-0" method="GET" asp-controller="Product" asp-action="Search">
-							<div class="search mx-auto">
-								<input type="text" placeholder=" " name="pattern">
-								<div>
-									<svg>
-										<use xlink:href="#path">
-									</svg>
-								</div>
-							</div>
-								
-							<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-								<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 28" id="path">
-									<path d="M32.9418651,-20.6880772 C37.9418651,-20.6880772 40.9418651,-16.6880772 40.9418651,-12.6880772 C40.9418651,-8.68807717 37.9418651,-4.68807717 32.9418651,-4.68807717 C27.9418651,-4.68807717 24.9418651,-8.68807717 24.9418651,-12.6880772 C24.9418651,-16.6880772 27.9418651,-20.6880772 32.9418651,-20.6880772 L32.9418651,-29.870624 C32.9418651,-30.3676803 33.3448089,-30.770624 33.8418651,-30.770624 C34.08056,-30.770624 34.3094785,-30.6758029 34.4782612,-30.5070201 L141.371843,76.386562" transform="translate(83.156854, 22.171573) rotate(-225.000000) translate(-83.156854, -22.171573)"></path>
-								</symbol>
-							</svg>
-	<!--
-							<input class="form-control mr-sm-2" name="pattern" type="search" placeholder="Search" aria-label="Search">
-							<button class="btn btn-outline-success my-2 my-sm-0 mx-auto" type="submit">Search</button>
-							<br />
-							-->
-						</form>
-					</div>
-					</li>
-					</div>
-					<div class="my-auto pt-1">
-						<li class="nav-item">
-							<a asp-action="Index" asp-controller="Cart">
-								<i class="h4 text-light fa fa-shopping-cart" aria-hidden="true"></i>
-							</a>
-						</li>
-					</div>
-				</ul>
+<body class="bg">
+	<nav class="nav-bg navbar-expand-sm py-2 justify-content-between">
+		<div id="nav-1st-div" class="mx-auto row w-75">
+			<div class="nav-brand">
+				<a asp-action="Index" asp-controller="Home">
+					<img class="ml-2" src="~/images/logo.png" asp-append-version="true">
+				</a>
 			</div>
-		</nav>
+			<div class="search-box my-auto">
+				<form class="form-inline" method="GET" asp-controller="Product" asp-action="Search">
+					<div class="input-group mx-auto bg-white rounded20">
+						<input id="search-box" type="text" name="pattern" class="form-control search-box" placeholder="What are you looking for?" aria-label="What are you looking for?" aria-describedby="search-box">
+						<div class="input-group-append bg-white rounded20">
+							<button class="btn" type="submit"><i id="search-box-btn" class="my-auto fa fa-search"></i></button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="my-auto links">
+				<button class="navbar-toggler" data-toggle="collapse" data-target="#nav"><i class="fa fa-bars"></i></button>
+				<div class="collapse navbar-collapse" id="nav">
+					<div class="w-100 mx-auto text-center">
+						<ul class="navbar-nav justify-content-between">
+							<li class="nav-item"><a class="nav-link" asp-action="Index" asp-controller="Home"><span is-active-route asp-controller="Home" asp-action="Index">Home</span></a></li>
+							<li class="nav-item"><a class="nav-link" asp-action="Category" asp-controller="Product"><span is-active-route asp-controller="Product" asp-action="Category">Categories</span></a></li>
+							<li class="nav-item"><a class="nav-link" asp-action="Contact" asp-controller="Home"><span is-active-route asp-controller="Home" asp-action="Contact">Contact</span></a></li>
+							@if(signInManager.IsSignedIn(User))
+							{
+								<li class="nav-item">
+									<form method="post" asp-action="SignOut" asp-controller="Account">
+											<button id="signout" type="submit" class="nav-link btn btn-link mx-auto">
+												Sign out
+											</button>
+									</form>
+								</li>
+							}
+							else
+							{
+								<li class="nav-item"><a class="nav-link" asp-action="SignIn" asp-controller="Account"><span is-active-route asp-controller="Account" asp-action="SignIn">Sign in</span></a></li>
+								<li class="nav-item"><a class="nav-link" asp-action="SignUp" asp-controller="Account"><span is-active-route asp-controller="Account" asp-action="SignUp">Sign up</span></a></li>
+							}
+								<li class="nav-item">
+									<a id="cart" asp-action="Index" asp-controller="Cart" class="nav-link">
+										<i class="h3 my-auto fa fa-shopping-cart" aria-hidden="true"></i>
+									</a>
+								</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</nav>
+	<div class="container-fluid py-2">
+		@RenderBody()
 	</div>
 
-			@RenderBody()
-
-<!--
-		<main role="main">
-		</main> 
--->
-
-	<footer class="border-top footer text-muted bg-light">
+	<footer class="border-top footer text-muted bg-dark">
 		<div class="container">
 			&copy; 2019 - Mangary - <a asp-action="Privacy" asp-controller="Home">Privacy</a>
 		</div>

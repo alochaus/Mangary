@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="~/css/site.css" />
 </head>
 
-<body class="bg-light">
+<body class="bg">
 	<nav class="nav-bg navbar-expand-sm py-2 justify-content-between">
 		<div id="nav-1st-div" class="mx-auto row w-75">
 			<div class="nav-brand">
@@ -54,8 +54,8 @@
 								<li class="nav-item"><a class="nav-link" asp-action="SignUp" asp-controller="Account"><span is-active-route asp-controller="Account" asp-action="SignUp">Sign up</span></a></li>
 							}
 								<li class="nav-item">
-									<a asp-action="Index" asp-controller="Cart">
-										<i class="h3 my-auto fa fa-shopping-cart text-light" aria-hidden="true"></i>
+									<a id="cart" asp-action="Index" asp-controller="Cart" class="nav-link">
+										<i class="h3 my-auto fa fa-shopping-cart" aria-hidden="true"></i>
 									</a>
 								</li>
 						</ul>

@@ -81,11 +81,23 @@ body {
 #signout
 {
 	color: #fff;
-	padding-right: 0px;
+	padding-right: 8px;
 	border-left-width: 0px;
 	border-top-width: 0px;
 	border-right-width: 0px;
 	border-bottom-width: 0px;
+}
+#signout:hover {
+	color: #0056b3;
+}
+
+#cart {
+	padding-bottom: 2.75px;
+	padding-top: 0px;
+}
+
+.nav-link:hover {
+	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
 .footer {
@@ -156,7 +168,7 @@ div.search-box {
 	border-radius: 20px;
 }
 
-#search-box-btn, #cart {
+#search-box-btn {
 	color: #ba1619;
 }
 
@@ -168,6 +180,10 @@ div.search-box {
 	background-color: #222831 !important;
 }
 
-.bg-light {
+.bg {
 	background-color: #e0e0e0 !important;
+}
+
+.bg-light {
+	background-color: #f3f3f3 !important;
 }

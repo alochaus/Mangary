@@ -147,5 +147,18 @@ namespace Mangary.Controllers
 
 			return View(product);
 		}
+
+		[HttpGet("LatestMangaAdded/{Page}")]
+		public IActionResult LatestProductsAdded(int Page)
+		{
+			int NumOfProds = 10;
+			if(!(Page >= 1)) return RedirectToAction("Index", "Home");
+			ViewBag.Page = Page;
+			ViewBag.DisplayPrev = Page > 1;
+			Console.Write($"\n\n{dbContext.Products.Count().ToString()}\n\n");
+			ViewBag.DisplayNext = dbContext.Products.Count() > ((Page - 1) * NumOfProds) + NumOfProds;
+			IEnumerable<Product> Products = ProductServices.GetLatestMangaAdded(dbContext, Page, NumOfProds);
+			return View(Products);
+		}
 	}
 }

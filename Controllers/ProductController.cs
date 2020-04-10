@@ -149,7 +149,7 @@ namespace Mangary.Controllers
 		}
 
 		[HttpGet("LatestMangaAdded/{Page}")]
-		public IActionResult LatestMangaAdded(int Page)
+		public IActionResult LatestProductsAdded(int Page)
 		{
 			int NumOfProds = 10;
 			if(!(Page >= 1)) return RedirectToAction("Index", "Home");

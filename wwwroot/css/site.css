@@ -169,8 +169,19 @@ div.search-box {
 	color: #ba1619;
 }
 
+.paging-related-btn {
+	color: #fff;
+	background-color: #cb1f1f;	
+	font-weight: bold;
+}
+.paging-related-btn:hover {
+	color: #cb1f1f;
+	background-color: #fff;	
+	font-weight: bold;
+}
+
 .nav-bg {
-	background-image: linear-gradient(15deg, #b31217 0%, #e52d27 100%) 
+	background-image: linear-gradient(15deg, #b31217 0%, #e52d27 100%);
 }
 
 .bg-dark {

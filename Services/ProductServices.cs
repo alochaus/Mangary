@@ -30,6 +30,12 @@ namespace Mangary.Services
 			return dbContext.Products.Where(x => ProductId.Any(y => x.ProductId == y));
 		}
 
+		public static IEnumerable<Product> GetLatestMangaAdded(AppDbContext dbContext, int Page, int NumOfProds)
+		{
+			int skip = (Page - 1) * NumOfProds;
+			return dbContext.Products.AsEnumerable().OrderByDescending(x => x.Id).Skip(skip).Take(NumOfProds);
+		}
+
 		public static int CategoryParser<T>(string name) where T: new()
 		{
 			return (int)Enum.Parse(typeof(T), name);

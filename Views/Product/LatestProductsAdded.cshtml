@@ -1,0 +1,62 @@
+@model IEnumerable<Mangary.Models.Product>
+
+@{
+	ViewData["Title"] = "Home Page";
+	int NEXT = ViewBag.Page + 1;
+	int PREV = ViewBag.Page - 1;
+}
+
+<div class="container rounded bg-light">
+	<table class="table mt-3">
+		<tr>
+			<th>Cover</th>
+			<th>Name</th>
+			<th>Price</th>
+		</tr>
+		@try
+		{
+			@foreach (Product Manga in Model)
+			{
+				<tr>
+					<td>
+						<a asp-action="ProductsPage" asp-controller="Product" asp-route-ProductId="@Manga.ProductId">
+							<img style="width: 100px" class="card-img-top" src="/UploadedPhotos/@Manga.PhotoPath" asp-append-version="true" />
+						</a>
+					</td>
+					<td>
+						<a asp-action="ProductsPage" asp-controller="Product" asp-route-ProductId="@Manga.ProductId">
+						@Manga.Name
+						</a>
+					</td>
+					<td>
+						<a asp-action="ProductsPage" asp-controller="Product" asp-route-ProductId="@Manga.ProductId">
+						$@Manga.Price USD
+						</a>	
+					</td>
+				</tr>
+			}
+		}
+		catch
+		{
+		}
+	</table>
+</div>
+
+<div class="row justify-content-center">
+	@if(@ViewBag.DisplayPrev)
+	{
+		<div class="col-auto">
+			<a asp-action="LatestMangaAdded" asp-controller="Product" asp-route-Page="@PREV">
+				<button class="btn paging-related-btn">PREV</button>
+			</a>
+		</div>
+	} else { }
+	@if(@ViewBag.DisplayNext)
+	{
+		<div class="col-auto">
+			<a asp-action="LatestMangaAdded" asp-controller="Product" asp-route-Page="@NEXT">
+				<button class="btn paging-related-btn">NEXT</button>
+			</a>
+		</div>
+	} else { }
+</div>

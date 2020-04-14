@@ -2,28 +2,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Mangary.Data;
 using Microsoft.AspNetCore.Mvc;
 using Mangary.Models;
 using Mangary.Services;
 using Mangary.ViewModels.Products;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
+using Mangary.DAL;
 
 namespace Mangary.Controllers
 {
 	public class ProductController : Controller
 	{
-		private readonly AppDbContext dbContext;
 		private readonly UserManager<IdentityUser> userManager;
+		private readonly IProductRepository productRepository;
 
 		public ProductController(
-			AppDbContext dbContext,
-			UserManager<IdentityUser> userManager
+			UserManager<IdentityUser> userManager,
+			IProductRepository productRepository
 		)
 		{
-			this.dbContext = dbContext;
 			this.userManager = userManager;
+			this.productRepository = productRepository;
 		}
 
 		[HttpGet("[controller]/[action]")]
@@ -57,22 +57,31 @@ namespace Mangary.Controllers
 			string[] categories = id.Split("_");
 			List<int> CategoryId = new List<int>();
 			foreach(string category in categories)
-				CategoryId.Add(ProductServices.CategoryParser<Categories>(category));
-			
+				CategoryId.Add((int)Enum.Parse(typeof(Categories), category));
+
 			List<Product> MangaList = new List<Product>();
-			MangaList.AddRange(ProductServices.GetProducts(
-				dbContext, ProductServices.GetProductIdByCategoryId(
-					dbContext, CategoryId[0]
+
+			MangaList.AddRange(
+				productRepository.GetProductById(
+					productRepository.GetProductIdByCategoryId(CategoryId[0])
 				)
-			));
+			);
+
+			/*
+				MangaList.AddRange(ProductServices.GetProducts(
+					dbContext, ProductServices.GetProductIdByCategoryId(
+						dbContext, CategoryId[0]
+					)
+				));
+			 */
 
 			for(int i=1; i<CategoryId.Count(); i++)
 			{
-				MangaList = MangaList.Intersect(ProductServices.GetProducts(
-					dbContext, ProductServices.GetProductIdByCategoryId(
-						dbContext, CategoryId[i]
+				MangaList = MangaList.Intersect(
+					productRepository.GetProductById(
+						productRepository.GetProductIdByCategoryId(CategoryId[i])
 					)
-				)).ToList();
+				).ToList();
 			}
 
 			categoryViewModel.Add(
@@ -105,12 +114,13 @@ namespace Mangary.Controllers
 
 			string Pattern = StringServices.Cleaner(pattern);
 
-			List<Product> ProductList = new List<Product>();
+			//List<Product> ProductList = new List<Product>();
 
-			IQueryable<Product> Temp = ProductServices.SearchFor(dbContext, Pattern);
-			ProductList.AddRange(Temp);
+			IEnumerable<Product> Result = productRepository.Search(Pattern);
+			// IQueryable<Product> Temp = ProductServices.SearchFor(dbContext, Pattern);
+			//ProductList.AddRange(Result);
 
-			return View(ProductList);
+			return View(Result);
 		}
 
 		[HttpPost]
@@ -124,6 +134,7 @@ namespace Mangary.Controllers
 			{
 				CategoryString.Append(SelectedCategories[i] + "_");
 			}
+
 			CategoryString.Remove(CategoryString.Length - 1, 1);
 			
 			return RedirectToAction("Category", "Product", new { id = CategoryString });
@@ -132,8 +143,7 @@ namespace Mangary.Controllers
 		[HttpGet("[controller]/{ProductId}")]
 		public async Task<IActionResult> ProductsPage(Guid ProductId)
 		{
-			Product product = new Product();
-			product = dbContext.Products.Where(x => x.ProductId == ProductId).SingleOrDefault();
+			Product product = productRepository.GetProductById(ProductId);
 
 			IdentityUser User = await userManager.GetUserAsync(HttpContext.User);
 			try
@@ -155,9 +165,9 @@ namespace Mangary.Controllers
 			if(!(Page >= 1)) return RedirectToAction("Index", "Home");
 			ViewBag.Page = Page;
 			ViewBag.DisplayPrev = Page > 1;
-			Console.Write($"\n\n{dbContext.Products.Count().ToString()}\n\n");
-			ViewBag.DisplayNext = dbContext.Products.Count() > ((Page - 1) * NumOfProds) + NumOfProds;
-			IEnumerable<Product> Products = ProductServices.GetLatestMangaAdded(dbContext, Page, NumOfProds);
+			ViewBag.DisplayNext = productRepository.Count() > ((Page - 1) * NumOfProds) + NumOfProds;
+			IEnumerable<Product> Products = productRepository.GetLatestProductsAdded(Page, NumOfProds);
+			//IEnumerable<Product> Products = ProductServices.GetLatestMangaAdded(dbContext, Page, NumOfProds);
 			return View(Products);
 		}
 	}

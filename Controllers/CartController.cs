@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Mangary.DAL;
 using Mangary.Data;
 using Mangary.Models;
 using Mangary.ViewModels.Cart;
@@ -16,14 +17,17 @@ namespace Mangary.Controllers
 	{
 		private readonly UserManager<IdentityUser> userManager;
 		private readonly AppDbContext dbContext;
+		private readonly IProductRepository productRepository;
 
 		public CartController(
 			UserManager<IdentityUser> userManager,
-			AppDbContext dbContext
+			AppDbContext dbContext,
+			IProductRepository productRepository
 		)
 		{
 			this.userManager = userManager;
 			this.dbContext = dbContext;
+			this.productRepository = productRepository;
 		}
 
 		[HttpPost]
@@ -31,7 +35,7 @@ namespace Mangary.Controllers
 		{
 			IdentityUser User = await userManager.GetUserAsync(HttpContext.User);
 
- 			bool ProductExists = dbContext.Products.Where(x => x.ProductId == ProductId).Any();
+ 			bool ProductExists = productRepository.GetProductById(ProductId) != null;
 			bool IsAlreadyInCart = dbContext.Cart.Where(x => x.ProductId == ProductId && x.Email == User.Email).Any();
 
 			if(User != null && ProductExists && !IsAlreadyInCart)

@@ -9,6 +9,7 @@ using Mangary.Services;
 using Mangary.ViewModels.Products;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
+using Mangary.DAL;
 
 namespace Mangary.Controllers
 {
@@ -16,14 +17,17 @@ namespace Mangary.Controllers
 	{
 		private readonly AppDbContext dbContext;
 		private readonly UserManager<IdentityUser> userManager;
+		private readonly IProductRepository productRepository;
 
 		public ProductController(
 			AppDbContext dbContext,
-			UserManager<IdentityUser> userManager
+			UserManager<IdentityUser> userManager,
+			IProductRepository productRepository
 		)
 		{
 			this.dbContext = dbContext;
 			this.userManager = userManager;
+			this.productRepository = productRepository;
 		}
 
 		[HttpGet("[controller]/[action]")]
@@ -124,6 +128,7 @@ namespace Mangary.Controllers
 			{
 				CategoryString.Append(SelectedCategories[i] + "_");
 			}
+
 			CategoryString.Remove(CategoryString.Length - 1, 1);
 			
 			return RedirectToAction("Category", "Product", new { id = CategoryString });
@@ -132,8 +137,7 @@ namespace Mangary.Controllers
 		[HttpGet("[controller]/{ProductId}")]
 		public async Task<IActionResult> ProductsPage(Guid ProductId)
 		{
-			Product product = new Product();
-			product = dbContext.Products.Where(x => x.ProductId == ProductId).SingleOrDefault();
+			Product product = productRepository.GetProductById(ProductId);
 
 			IdentityUser User = await userManager.GetUserAsync(HttpContext.User);
 			try
@@ -155,8 +159,7 @@ namespace Mangary.Controllers
 			if(!(Page >= 1)) return RedirectToAction("Index", "Home");
 			ViewBag.Page = Page;
 			ViewBag.DisplayPrev = Page > 1;
-			Console.Write($"\n\n{dbContext.Products.Count().ToString()}\n\n");
-			ViewBag.DisplayNext = dbContext.Products.Count() > ((Page - 1) * NumOfProds) + NumOfProds;
+			ViewBag.DisplayNext = productRepository.Count() > ((Page - 1) * NumOfProds) + NumOfProds;
 			IEnumerable<Product> Products = ProductServices.GetLatestMangaAdded(dbContext, Page, NumOfProds);
 			return View(Products);
 		}

@@ -1,33 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Mangary.Models;
-using Mangary.Data;
 using Mangary.ViewModels;
+using Mangary.DAL;
 
 namespace Mangary.Controllers
 {
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
-		private readonly AppDbContext dbContext;
+		private readonly IProductRepository productRepository;
 
 		public HomeController(
 			ILogger<HomeController> logger,
-			AppDbContext dbContext
+			IProductRepository productRepository
 		)
 		{
 			_logger = logger;
-			this.dbContext = dbContext;
+			this.productRepository = productRepository;
 		}
 
 		public IActionResult Index()
 		{
 			List<Product> LatestProductsAdded = new List<Product>();
-			LatestProductsAdded.AddRange(dbContext.Products.OrderByDescending(x => x.Id).Take(5));
+			LatestProductsAdded.AddRange(productRepository.GetLatest(5));
 
 			HomeViewModel homeViewModel = new HomeViewModel()
 			{

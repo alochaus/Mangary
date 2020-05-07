@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;
+using Mangary.DAL;
 
 namespace Mangary.Controllers
 {
@@ -16,14 +17,17 @@ namespace Mangary.Controllers
 	{
 		private readonly IWebHostEnvironment hostingEnvironment;
 		private readonly AppDbContext dbContext;
+		private readonly IProductRepository productRepository;
 
 		public ManagerController(
 			IWebHostEnvironment hostingEnvironment,
-			AppDbContext dbContext
+			AppDbContext dbContext,
+			IProductRepository productRepository
 		)
 		{
 			this.hostingEnvironment = hostingEnvironment;
 			this.dbContext = dbContext;
+			this.productRepository = productRepository;
 		}
 
 		[HttpGet]
@@ -39,9 +43,6 @@ namespace Mangary.Controllers
 
 				if(model.Photo != null)
 				{
-					/*
-					 *	FILE UPLOAD
-					 */
 					string FolderPath = Path.Combine(hostingEnvironment.WebRootPath, "UploadedPhotos");
 
 					FileName = $"{Guid.NewGuid().ToString()}_{model.Photo.FileName}";
@@ -99,7 +100,7 @@ namespace Mangary.Controllers
 		[HttpGet("[Controller]/[action]/{ProductId}")]
 		public IActionResult EditProduct(Guid ProductId)
 		{
-			Product product = dbContext.Products.Where(x => x.ProductId == ProductId).SingleOrDefault();
+			Product product = productRepository.GetProductById(ProductId);
 			Categories?[] categories = dbContext.ProductCategories.Where(x => x.ProductId == product.ProductId).Select(y => y.CategoryId).ToArray();
 
 			EditProductViewModel model = new EditProductViewModel()
@@ -122,7 +123,7 @@ namespace Mangary.Controllers
 		public IActionResult EditProduct(EditProductViewModel model)
 		{
 			string FileName = null;
-			Product product = dbContext.Products.Where(x => x.ProductId == model.ProductId).SingleOrDefault();
+			Product product = productRepository.GetProductById(model.ProductId);
 			if(product != null)
 			{
 				product.Name = model.Name;
@@ -147,8 +148,8 @@ namespace Mangary.Controllers
 					product.PhotoPath = FileName;
 				}
 
-				dbContext.Products.Update(product);
-				dbContext.SaveChanges();
+				productRepository.UpdateProduct(product);
+				productRepository.Save();
 
 				List<ProductCategories> categories = dbContext.ProductCategories.Where(x => x.ProductId == model.ProductId).ToList();
 				categories[0].CategoryId = model.Category1;
@@ -165,12 +166,15 @@ namespace Mangary.Controllers
 		[HttpPost]
 		public IActionResult DeleteProduct(Guid ProductId)
 		{
-			IQueryable<Product> ProductInProducts = dbContext.Products.Where(x => x.ProductId == ProductId);
-			if(ProductInProducts.Any())
+			productRepository.DeleteProduct(ProductId);
+			Product ProductInProducts = productRepository.GetProductById(ProductId);
+			//IQueryable<Product> ProductInProducts = dbContext.Products.Where(x => x.ProductId == ProductId);
+			if(ProductInProducts != null)
 			{
 				IQueryable<Cart> ProductInCart = dbContext.Cart.Where(x => x.ProductId == ProductId);
 
-				dbContext.Products.RemoveRange(ProductInProducts);
+				productRepository.DeleteProduct(ProductInProducts);
+				//dbContext.Products.RemoveRange(ProductInProducts);
 				dbContext.Cart.RemoveRange(ProductInCart);
 				dbContext.SaveChanges();
 			}

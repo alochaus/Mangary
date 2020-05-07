@@ -23,6 +23,11 @@ namespace Mangary.DAL
 			dbContext.Products.Remove(product);
 		}
 
+		public void DeleteProduct(Product product)
+		{
+			dbContext.Products.Remove(product);
+		}
+
 		protected virtual void Dispose(bool Disposing)
 		{
 			if (!this.Disposed)
@@ -46,6 +51,11 @@ namespace Mangary.DAL
 		public Product GetProductById(Guid ProductId)
 		{
 			return dbContext.Products.Where(x => x.ProductId == ProductId).FirstOrDefault();
+		}
+
+		public IEnumerable<Product> GetProductById(IEnumerable<Guid> GuidList)
+		{
+			return dbContext.Products.Where(x => GuidList.Contains(x.ProductId)).ToList();
 		}
 
 		public void InsertProduct(Product product)

@@ -46,7 +46,7 @@
 	@if(@ViewBag.DisplayPrev)
 	{
 		<div class="col-auto">
-			<a asp-action="LatestMangaAdded" asp-controller="Product" asp-route-Page="@PREV">
+			<a asp-action="LatestProductsAdded" asp-controller="Product" asp-route-Page="@PREV">
 				<button class="btn paging-related-btn">PREV</button>
 			</a>
 		</div>
@@ -54,7 +54,7 @@
 	@if(@ViewBag.DisplayNext)
 	{
 		<div class="col-auto">
-			<a asp-action="LatestMangaAdded" asp-controller="Product" asp-route-Page="@NEXT">
+			<a asp-action="LatestProductsAdded" asp-controller="Product" asp-route-Page="@NEXT">
 				<button class="btn paging-related-btn">NEXT</button>
 			</a>
 		</div>

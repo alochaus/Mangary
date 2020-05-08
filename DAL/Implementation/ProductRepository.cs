@@ -58,9 +58,25 @@ namespace Mangary.DAL
 			return dbContext.Products.Where(x => GuidList.Contains(x.ProductId)).ToList();
 		}
 
+		public IEnumerable<Product> GetLatestProductsAdded(int Page, int NumOfProds)
+		{
+			int skip = (Page - 1) * NumOfProds;
+			return dbContext.Products.AsEnumerable().OrderByDescending(x => x.Id).Skip(skip).Take(NumOfProds);
+		}
+
+		public IEnumerable<Guid> GetProductIdByCategoryId(int id)
+		{
+			return dbContext.ProductCategories.Where(x => x.CategoryId == (Categories?)id).Select(x => x.ProductId).ToList();
+		}
+
 		public void InsertProduct(Product product)
 		{
 			dbContext.Products.Add(product);
+		}
+
+		public IEnumerable<Product> Search(string pattern)
+		{
+			return dbContext.Products.Where(x => EF.Functions.Like(x.Name, $"%{pattern}%")).ToList();
 		}
 
 		public void Save()

@@ -15,17 +15,14 @@ namespace Mangary.Controllers
 {
 	public class ProductController : Controller
 	{
-		private readonly AppDbContext dbContext;
 		private readonly UserManager<IdentityUser> userManager;
 		private readonly IProductRepository productRepository;
 
 		public ProductController(
-			AppDbContext dbContext,
 			UserManager<IdentityUser> userManager,
 			IProductRepository productRepository
 		)
 		{
-			this.dbContext = dbContext;
 			this.userManager = userManager;
 			this.productRepository = productRepository;
 		}
@@ -62,21 +59,30 @@ namespace Mangary.Controllers
 			List<int> CategoryId = new List<int>();
 			foreach(string category in categories)
 				CategoryId.Add(ProductServices.CategoryParser<Categories>(category));
-			
+
 			List<Product> MangaList = new List<Product>();
-			MangaList.AddRange(ProductServices.GetProducts(
-				dbContext, ProductServices.GetProductIdByCategoryId(
-					dbContext, CategoryId[0]
+
+			MangaList.AddRange(
+				productRepository.GetProductById(
+					productRepository.GetProductIdByCategoryId(CategoryId[0])
 				)
-			));
+			);
+
+			/*
+				MangaList.AddRange(ProductServices.GetProducts(
+					dbContext, ProductServices.GetProductIdByCategoryId(
+						dbContext, CategoryId[0]
+					)
+				));
+			 */
 
 			for(int i=1; i<CategoryId.Count(); i++)
 			{
-				MangaList = MangaList.Intersect(ProductServices.GetProducts(
-					dbContext, ProductServices.GetProductIdByCategoryId(
-						dbContext, CategoryId[i]
+				MangaList = MangaList.Intersect(
+					productRepository.GetProductById(
+						productRepository.GetProductIdByCategoryId(CategoryId[i])
 					)
-				)).ToList();
+				).ToList();
 			}
 
 			categoryViewModel.Add(
@@ -109,12 +115,13 @@ namespace Mangary.Controllers
 
 			string Pattern = StringServices.Cleaner(pattern);
 
-			List<Product> ProductList = new List<Product>();
+			//List<Product> ProductList = new List<Product>();
 
-			IQueryable<Product> Temp = ProductServices.SearchFor(dbContext, Pattern);
-			ProductList.AddRange(Temp);
+			IEnumerable<Product> Result = productRepository.Search(Pattern);
+			// IQueryable<Product> Temp = ProductServices.SearchFor(dbContext, Pattern);
+			//ProductList.AddRange(Result);
 
-			return View(ProductList);
+			return View(Result);
 		}
 
 		[HttpPost]
@@ -160,7 +167,8 @@ namespace Mangary.Controllers
 			ViewBag.Page = Page;
 			ViewBag.DisplayPrev = Page > 1;
 			ViewBag.DisplayNext = productRepository.Count() > ((Page - 1) * NumOfProds) + NumOfProds;
-			IEnumerable<Product> Products = ProductServices.GetLatestMangaAdded(dbContext, Page, NumOfProds);
+			IEnumerable<Product> Products = productRepository.GetLatestProductsAdded(Page, NumOfProds);
+			//IEnumerable<Product> Products = ProductServices.GetLatestMangaAdded(dbContext, Page, NumOfProds);
 			return View(Products);
 		}
 	}

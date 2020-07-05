@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Mangary.Data;
 using Microsoft.AspNetCore.Mvc;
 using Mangary.Models;
 using Mangary.Services;
@@ -58,7 +57,7 @@ namespace Mangary.Controllers
 			string[] categories = id.Split("_");
 			List<int> CategoryId = new List<int>();
 			foreach(string category in categories)
-				CategoryId.Add(ProductServices.CategoryParser<Categories>(category));
+				CategoryId.Add((int)Enum.Parse(typeof(Categories), category));
 
 			List<Product> MangaList = new List<Product>();
 

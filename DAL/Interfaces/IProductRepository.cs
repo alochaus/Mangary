@@ -8,8 +8,9 @@ namespace Mangary.DAL
 	{
 		IEnumerable<Product> GetAll();
 		Product GetProductById(Guid ProductId);
+		IEnumerable<Product> GetLatest(int NumOfProducts);
 		IEnumerable<Product> GetProductById(IEnumerable<Guid> GuidList);
-		IEnumerable<Product> GetLatestProductsAdded(int page, int NumOfProds);
+		IEnumerable<Product> GetLatestProductsAdded(int page, int NumOfProducts);
 		IEnumerable<Guid> GetProductIdByCategoryId(int id);
 		int Count();
 		void InsertProduct(Product product);

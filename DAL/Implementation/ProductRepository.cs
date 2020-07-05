@@ -58,10 +58,10 @@ namespace Mangary.DAL
 			return dbContext.Products.Where(x => GuidList.Contains(x.ProductId)).ToList();
 		}
 
-		public IEnumerable<Product> GetLatestProductsAdded(int Page, int NumOfProds)
+		public IEnumerable<Product> GetLatestProductsAdded(int Page, int NumOfProducts)
 		{
-			int skip = (Page - 1) * NumOfProds;
-			return dbContext.Products.AsEnumerable().OrderByDescending(x => x.Id).Skip(skip).Take(NumOfProds);
+			int skip = (Page - 1) * NumOfProducts;
+			return dbContext.Products.AsEnumerable().OrderByDescending(x => x.Id).Skip(skip).Take(NumOfProducts);
 		}
 
 		public IEnumerable<Guid> GetProductIdByCategoryId(int id)
@@ -92,6 +92,11 @@ namespace Mangary.DAL
 		public int Count()
 		{
 			return dbContext.Products.Count();
+		}
+
+		public IEnumerable<Product> GetLatest(int NumOfProducts)
+		{
+			return dbContext.Products.OrderByDescending(x => x.Id).Take(NumOfProducts);
 		}
 	}
 }

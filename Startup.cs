@@ -30,6 +30,7 @@ namespace Mangary
 			services.AddAuthorization();
 
 			services.AddScoped<IProductRepository, ProductRepository>();
+			services.AddScoped<ICartRepository,    CartRepository>();
 
 			services.ConfigureApplicationCookie(options => {
 				options.LoginPath = "/Account/SignIn";
@@ -59,7 +60,7 @@ namespace Mangary
 					await next();
 				}
 			});
-*/
+			*/
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseRouting();

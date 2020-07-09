@@ -18,16 +18,19 @@ namespace Mangary.Controllers
 		private readonly UserManager<IdentityUser> userManager;
 		private readonly AppDbContext dbContext;
 		private readonly IProductRepository productRepository;
+		private readonly ICartRepository cartRepository;
 
 		public CartController(
 			UserManager<IdentityUser> userManager,
 			AppDbContext dbContext,
-			IProductRepository productRepository
+			IProductRepository productRepository,
+			ICartRepository cartRepository
 		)
 		{
 			this.userManager = userManager;
 			this.dbContext = dbContext;
 			this.productRepository = productRepository;
+			this.cartRepository = cartRepository;
 		}
 
 		[HttpPost]
@@ -36,7 +39,8 @@ namespace Mangary.Controllers
 			IdentityUser User = await userManager.GetUserAsync(HttpContext.User);
 
  			bool ProductExists = productRepository.GetProductById(ProductId) != null;
-			bool IsAlreadyInCart = dbContext.Cart.Where(x => x.ProductId == ProductId && x.Email == User.Email).Any();
+			bool IsAlreadyInCart = cartRepository.IsProductInCart(ProductId, User.Email);
+			//bool IsAlreadyInCart = dbContext.Cart.Where(x => x.ProductId == ProductId && x.Email == User.Email).Any();
 
 			if(User != null && ProductExists && !IsAlreadyInCart)
 			{
@@ -46,8 +50,10 @@ namespace Mangary.Controllers
 					ProductId = ProductId
 				};
 
-				dbContext.Add(cart);
-				dbContext.SaveChanges();
+				cartRepository.AddProductToCart(cart);
+				//dbContext.Add(cart);
+				cartRepository.Save();
+				//dbContext.SaveChanges();
 			}
 
 			return RedirectToAction("Index", "Cart");
@@ -59,19 +65,22 @@ namespace Mangary.Controllers
 			IdentityUser User = await userManager.GetUserAsync(HttpContext.User);
 			try
 			{
-				IQueryable<Cart> CartItem = dbContext.Cart.Where(x => x.ProductId == ProductId && x.Email == User.Email);
+				Cart CartItem = cartRepository.GetCartItem(ProductId, User.Email);
+				//IQueryable<Cart> CartItem = dbContext.Cart.Where(x => x.ProductId == ProductId && x.Email == User.Email);
 				if(User != null)
 				{
-					dbContext.Cart.RemoveRange(CartItem);
-					dbContext.SaveChanges();
+					cartRepository.DeleteProductFromCart(CartItem);
+					//dbContext.Cart.RemoveRange(CartItem);
+					cartRepository.Save();
+					//dbContext.SaveChanges();
 				}
 
 				return RedirectToAction("Index", "Cart");
 			}
-			catch(System.Exception e)
+			catch(System.Exception error)
 			{
 				Console.WriteLine("\n\n\n\n\n\n\n\n");
-				Console.WriteLine(e.ToString());
+				Console.WriteLine(error.ToString());
 				Console.WriteLine("\n\n\n\n\n\n\n\n");
 				return RedirectToAction("About", "Home");
 			}
@@ -83,11 +92,8 @@ namespace Mangary.Controllers
 		{
 			IdentityUser User = await userManager.GetUserAsync(HttpContext.User);
 
-			// I know that "cart" is not a good name for this variable,
-			// but man, am I bad at naming variables.
-			// I might start to name my variables with whole non-spaced phrases in camel case.
-
-			IEnumerable<Guid> GuidList = dbContext.Cart.Where(x => x.Email == User.Email).Select(x => x.ProductId).ToList();
+			IEnumerable<Guid> GuidList = cartRepository.GetProducts(User.Email);
+			//IEnumerable<Guid> GuidList = dbContext.Cart.Where(x => x.Email == User.Email).Select(x => x.ProductId).ToList();
 			List<Product> Products = new List<Product>();
 
 			IEnumerable<Product> prod = productRepository.GetProductById(GuidList);

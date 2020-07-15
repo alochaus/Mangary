@@ -2,26 +2,20 @@
 @inject SignInManager<IdentityUser> signInManager;
 
 <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@ViewData["Title"] - Mangrary</title>
-	<link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="~/css/site.css" />
-</head>
+	<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>@ViewData["Title"] - Mangrary</title>
+		<link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="~/css/site.css" />
+	</head>
 
-<body class="bg">
-	<nav class="nav-bg navbar-expand-sm py-2 justify-content-between">
-		<div id="nav-1st-div" class="mx-auto row w-75">
-			<div class="nav-brand">
-				<a asp-action="Index" asp-controller="Home">
-					<img class="ml-2" src="~/images/logo.png" asp-append-version="true">
-				</a>
-			</div>
-			<div class="search-box my-auto">
-				<form class="form-inline" method="GET" asp-controller="Product" asp-action="Search">
+	<body>
+		<div id="search-bar" class="my-auto sb-collapsed">
+			<div class="py-3">
+				<form class="form-inline w-75 mx-auto" method="GET" asp-controller="Product" asp-action="Search">
 					<div class="input-group mx-auto bg-white rounded20">
 						<input id="search-box" type="text" name="pattern" class="form-control search-box" placeholder="What are you looking for?" aria-label="What are you looking for?" aria-describedby="search-box">
 						<div class="input-group-append bg-white rounded20">
@@ -30,57 +24,65 @@
 					</div>
 				</form>
 			</div>
-			<div class="my-auto links">
-				<button class="navbar-toggler" data-toggle="collapse" data-target="#nav"><i class="fa fa-bars"></i></button>
-				<div class="collapse navbar-collapse" id="nav">
-					<div class="w-100 mx-auto text-center">
-						<ul class="navbar-nav justify-content-between">
-							<li class="nav-item"><a class="nav-link" asp-action="Index" asp-controller="Home"><span is-active-route asp-controller="Home" asp-action="Index">Home</span></a></li>
-							<li class="nav-item"><a class="nav-link" asp-action="Category" asp-controller="Product"><span is-active-route asp-controller="Product" asp-action="Category">Categories</span></a></li>
-							<li class="nav-item"><a class="nav-link" asp-action="Contact" asp-controller="Home"><span is-active-route asp-controller="Home" asp-action="Contact">Contact</span></a></li>
-							@if(signInManager.IsSignedIn(User))
-							{
-								<li class="nav-item">
-									<form method="post" asp-action="SignOut" asp-controller="Account">
-											<button id="signout" type="submit" class="nav-link btn btn-link mx-auto">
-												Sign out
-											</button>
-									</form>
-								</li>
-							}
-							else
-							{
-								<li class="nav-item"><a class="nav-link" asp-action="SignIn" asp-controller="Account"><span is-active-route asp-controller="Account" asp-action="SignIn">Sign in</span></a></li>
-								<li class="nav-item"><a class="nav-link" asp-action="SignUp" asp-controller="Account"><span is-active-route asp-controller="Account" asp-action="SignUp">Sign up</span></a></li>
-							}
-								<li class="nav-item">
-									<a id="cart" asp-action="Index" asp-controller="Cart" class="nav-link">
-										<i class="h3 my-auto fa fa-shopping-cart" aria-hidden="true"></i>
-									</a>
-								</li>
-						</ul>
-					</div>
+		</div>
+		<nav>
+			<a asp-action="Index" asp-controller="Home">
+				<img src="~/images/Logo.png" width="300" height="91" class="position-absolute" style="z-index: 1;" asp-append-version="true" />
+			</a>
+			<div id="toggler" class="bg-light">
+				<button class="h-100 my-auto mr-3 ml-auto btn btn-link d-block" data-toggle="collapse" data-target="#nav-links">
+					<i class="h3 fa fa-bars mb-0" aria-hidden="true"></i>
+				</button>
+			</div>
+			<div id="nav-links" class="bg-light nav-links collapse navbar-collapse w-100">
+				<div id="links" class="bg-light">
+						<a class="nav-link my-auto" asp-action="Index" asp-controller="Home"><span is-active-route asp-controller="Home" asp-action="Index">Home</span></a>
+						<a class="nav-link my-auto" asp-action="Category" asp-controller="Product"><span is-active-route asp-controller="Product" asp-action="Category">Categories</span></a>
+						<a class="nav-link my-auto" asp-action="Contact" asp-controller="Home"><span is-active-route asp-controller="Home" asp-action="Contact">Contact</span></a>
+						@if(signInManager.IsSignedIn(User))
+						{
+							<form class="my-auto" method="post" asp-action="SignOut" asp-controller="Account">
+									<button id="signout" type="submit" class="nav-link btn btn-link mx-auto">
+										Sign out
+									</button>
+							</form>
+						}
+						else
+						{
+							<a class="nav-link my-auto" asp-action="SignIn" asp-controller="Account"><span is-active-route asp-controller="Account" asp-action="SignIn">Sign in</span></a>
+							<a class="nav-link my-auto" asp-action="SignUp" asp-controller="Account"><span is-active-route asp-controller="Account" asp-action="SignUp">Sign up</span></a>
+						}
+						<a id="cart" asp-action="Index" asp-controller="Cart" class="nav-link my-auto">
+							<i class="h3 my-auto fa fa-shopping-cart" aria-hidden="true"></i>
+						</a>
+						<button id="search-btn" class="nav-link my-auto btn btn-link">
+							<i class="h3 my-auto fa fa-search" aria-hidden="true"></i>
+						</button>
 				</div>
 			</div>
+		</nav>
 
+		<div>
+			@RenderBody()
 		</div>
-	</nav>
-	<div class="container-fluid py-2">
-		@RenderBody()
-	</div>
 
-	<footer class="border-top footer text-muted bg-dark">
-		<div class="container">
-			&copy; 2019 - Mangary - <a asp-action="Privacy" asp-controller="Home">Privacy</a>
-		</div>
-	</footer>
+		<footer class="border-top footer text-muted bg-dark">
+			<div class="container">
+				&copy; 2019 - Mangary - <a asp-action="Privacy" asp-controller="Home">Privacy</a>
+			</div>
+		</footer>
 
-	<script src="~/lib/jquery/jquery.js"></script>
-	<script src="~/lib/jquery-validation/jquery.validate.js"></script>
-	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="~/js/site.js" asp-append-version="true"></script>
+		<script src="~/lib/jquery/jquery.js"></script>
+		<script src="~/lib/jquery-validation/jquery.validate.js"></script>
+		<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+		<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="~/js/site.js" asp-append-version="true"></script>
+		<script>
+			$('#search-btn').on('click', () => {
+				$('#search-bar').toggleClass('search-bar');
+			});
+		</script>
 
-	@RenderSection("Scripts", required: false)
-</body>
+		@RenderSection("Scripts", required: false)
+	</body>
 </html>

@@ -1,18 +1,89 @@
-﻿a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+﻿/* my code */
+
+/* nav */
+/*     search */
+#search-btn {
+  padding-top: 7px;
+  padding-left: 14px;
+  border-left-width: 0px;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  padding-bottom: 7px;
+  padding-right: 14px;
+}
+
+#search-bar {
+  overflow: hidden;
+  transition: 0.4s;
+}
+.search-bar {
+  max-height: 60px !important;
+  background-color: #bf1b0c;
+}
+.sb-collapsed {
+  max-height: 0;
+}
+
+/*     cart */
+#cart {
+	padding-bottom: 2.75px;
+	padding-top: 0px;
+}
+
+nav .btn-link {
+  color: #686560;
+}
+
+/*     links */
+#nav-links.collapse:not(.show)
+{
+  display: block;
+}
+#links {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  flex-direction: row;
+  height: 75.8px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+#toggler {
+  height: 75.8px; 
+  display: none;
+}
+
+@media (max-width: 826px) {
+  #nav-links.collapse:not(.show)
+  {
+    display: none;
+  }
+
+  #links {
+    flex-direction: column;
+    min-height: 75.8px;
+    max-height: none;
+    height: auto;
+    padding-top: 45px;
+  }
+  #links a {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #toggler {
+    display: block;
+  }
 }
 
 nav a {
-  color: #fff;
+  color: #686560;
+  font-weight: 500;
 }
 
-
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.nav-link:hover {
+	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
@@ -21,15 +92,56 @@ nav a {
   border-color: #1861ac;
 }
 
+.active {
+	font-weight: bold;
+/*	color: #c00000; */
+	color: #111;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+#signout
+{
+  color: #686560;
+  padding-bottom: 8px;
+  padding-right: 16px;
+  padding-left: 16px;
+  border-left-width: 0px;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  padding-top: 8px;
+}
+#signout:hover {
+	color: #0056b3;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
   font-size: 14px;
+  position: relative;
+  min-height: 100%;
 }
 @media (min-width: 768px) {
   html {
     font-size: 16px;
   }
+}
+
+body {
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
 }
 
 .border-top {
@@ -43,59 +155,17 @@ html {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
-}
 
 /* html, body { background-color: #DDD; } */
 .abc { width: 360px; }
 
-#input-70
-{
+#input-70 {
 	width: 70%
 }
 
-#signout
-{
-	color: #fff;
-	padding-right: 8px;
-	padding-left: 8px;
-	border-left-width: 0px;
-	border-top-width: 0px;
-	border-right-width: 0px;
-	border-bottom-width: 0px;
-}
-#signout:hover {
-	color: #0056b3;
-}
-
-#cart {
-	padding-bottom: 2.75px;
-	padding-top: 0px;
-}
-
-.nav-link:hover {
-	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+.row {
+  margin-right: 0px !important;
+  margin-left: 0px !important;
 }
 
 .footer {
@@ -112,18 +182,12 @@ body {
 	color: #bd0029;
 }
 
-.active {
-	font-weight: bold;
-/*	color: #c00000; */
-	color: #f8f9fa;
-}
 
 @media (max-width: 575.98px) { .abc { width: 90%; } }
 @media (max-width: 768px) { .links { width: 100%; } }
 @media (max-width: 567px) { div.search-box { width: 100%; }}
 @media (max-width: 580px) { #search-box { width: 75%; } }
-@media (max-width: 810px) { #nav-1st-div { justify-content: center; }}
-@media (min-width: 811px) { #nav-1st-div { justify-content: space-between;}}
+
 .bg-dots {
 	width: 100%;
 	min-width: 1020px;

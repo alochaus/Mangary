@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Mangary.Data;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Mangary.DAL;
 
 namespace Mangary
@@ -18,8 +17,7 @@ namespace Mangary
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddDbContext<AppDbContext>(options =>
-				options.UseNpgsql(System.Environment.GetEnvironmentVariable("MangaryConnectionString")));
+			services.AddDbContext<AppDbContext>();
 
 			services.AddIdentity<IdentityUser, IdentityRole>(options => {
 				options.User.RequireUniqueEmail = true;

@@ -7,14 +7,15 @@ namespace Mangary.Data
 {
 	public class AppDbContext : IdentityDbContext<IdentityUser>
 	{
-		public AppDbContext(DbContextOptions options) : base(options)
-		{
-			
-		}	
+		public AppDbContext(DbContextOptions options) : base(options) { }	
 
-		protected override void OnModelCreating(ModelBuilder builder)
+		protected override void OnModelCreating(ModelBuilder builder) 
+			=> base.OnModelCreating(builder);
+
+		protected override void OnConfiguring(DbContextOptionsBuilder options)
 		{
-			base.OnModelCreating(builder);
+			if(options.IsConfigured) return;
+			options.UseNpgsql(System.Environment.GetEnvironmentVariable("MangaryConnectionString"));
 		}
 
 		public DbSet<Product> Products { get; set; }

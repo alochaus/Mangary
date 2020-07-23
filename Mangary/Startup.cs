@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Mangary.Data;
 using Microsoft.AspNetCore.Identity;
 using Mangary.DAL;
+using Mangary.Services;
 
 namespace Mangary
 {
@@ -29,6 +30,8 @@ namespace Mangary
 
 			services.AddScoped<IProductRepository, ProductRepository>();
 			services.AddScoped<ICartRepository,    CartRepository>();
+
+			services.AddScoped<ICategoryServices, CategoryServices>();
 
 			services.ConfigureApplicationCookie(options => {
 				options.LoginPath = "/Account/SignIn";

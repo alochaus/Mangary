@@ -16,14 +16,17 @@ namespace Mangary.Controllers
 	{
 		private readonly UserManager<IdentityUser> userManager;
 		private readonly IProductRepository productRepository;
+		private readonly ICategoryServices categoryServices;
 
 		public ProductController(
 			UserManager<IdentityUser> userManager,
-			IProductRepository productRepository
+			IProductRepository productRepository,
+			ICategoryServices categoryServices
 		)
 		{
 			this.userManager = userManager;
 			this.productRepository = productRepository;
+			this.categoryServices = categoryServices;
 		}
 
 		[HttpGet("[controller]/[action]")]
@@ -54,35 +57,8 @@ namespace Mangary.Controllers
 				}
 				return View(categoryViewModel);
 			}
-			string[] categories = id.Split("_");
-			List<int> CategoryId = new List<int>();
-			foreach(string category in categories)
-				CategoryId.Add((int)Enum.Parse(typeof(Categories), category));
 
-			List<Product> MangaList = new List<Product>();
-
-			MangaList.AddRange(
-				productRepository.GetProductById(
-					productRepository.GetProductIdByCategoryId(CategoryId[0])
-				)
-			);
-
-			/*
-				MangaList.AddRange(ProductServices.GetProducts(
-					dbContext, ProductServices.GetProductIdByCategoryId(
-						dbContext, CategoryId[0]
-					)
-				));
-			 */
-
-			for(int i=1; i<CategoryId.Count(); i++)
-			{
-				MangaList = MangaList.Intersect(
-					productRepository.GetProductById(
-						productRepository.GetProductIdByCategoryId(CategoryId[i])
-					)
-				).ToList();
-			}
+			List<Product> MangaList = categoryServices.Search(ref id);
 
 			categoryViewModel.Add(
 				new CategoryViewModel
